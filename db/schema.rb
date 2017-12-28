@@ -10,12 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171227155812) do
+ActiveRecord::Schema.define(version: 20171228045940) do
+
+  create_table "admin_users", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "line_items", force: :cascade do |t|
     t.integer "variant_id"
     t.integer "order_id"
-    t.integer "quantity", null: false
+    t.integer "quantity", default: 1, null: false
     t.decimal "price", precision: 8, scale: 2, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
