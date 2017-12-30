@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171230062242) do
+ActiveRecord::Schema.define(version: 20171230135854) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string "name"
@@ -18,6 +18,23 @@ ActiveRecord::Schema.define(version: 20171230062242) do
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "assets", force: :cascade do |t|
+    t.string "viewable_type"
+    t.integer "viewable_id"
+    t.integer "attachment_width"
+    t.integer "attachment_height"
+    t.integer "attachment_file_size"
+    t.integer "position"
+    t.string "attachment_content_type"
+    t.string "attachment_file_name"
+    t.string "type", limit: 75
+    t.datetime "attachment_updated_at"
+    t.text "alt"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["viewable_type", "viewable_id"], name: "index_assets_on_viewable_type_and_viewable_id"
   end
 
   create_table "attachments", force: :cascade do |t|
