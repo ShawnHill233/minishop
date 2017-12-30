@@ -1,7 +1,11 @@
 <tr>
-  <td>Trident</td>
-  <td>Internet Explorer 4.0</td>
-  <td>Win 95+</td>
-  <td class="center">4</td>
-  <td class="center">X</td>
+  <td><%= product.id %></td>
+  <td><%= product.name %></td>
+  <td><%= product.price %></td>
+  <td></td>
+  <td></td>
+  <td>
+    <%= link_to '编辑', edit_admin_product_path(product) %>
+    <%= link_to '删除', admin_product_path(product), method: :destroy %>
+  </td>
 </tr>

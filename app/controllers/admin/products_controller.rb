@@ -6,7 +6,7 @@ module Admin
 
     def create
       @product = Product.create(product_params)
-
+      redirect_to admin_products_path
     end
 
     def index
