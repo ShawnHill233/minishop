@@ -36,8 +36,6 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'font-awesome-rails'
 gem 'bootstrap_sb_admin_base_v2'
 gem 'jquery-datatables-rails', '~> 3.4.0'
-gem "paperclip", "~> 5.0.0"
-gem 'acts_as_list'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
