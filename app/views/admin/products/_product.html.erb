@@ -3,6 +3,7 @@
   <td><%= product.name %></td>
   <td><%= product.price %></td>
   <td></td>
+  <td><%= product.categories.map(&:name).join(",")%></td>
   <td></td>
   <td>
     <%= link_to '编辑', edit_admin_product_path(product) %>

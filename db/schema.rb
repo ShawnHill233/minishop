@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171230135854) do
+ActiveRecord::Schema.define(version: 20171231085829) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string "name"
@@ -46,6 +46,21 @@ ActiveRecord::Schema.define(version: 20171230135854) do
     t.index ["attachable_type", "attachable_id"], name: "index_attachments_on_attachable_type_and_attachable_id"
   end
 
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.integer "parent_id"
+    t.integer "lft", null: false
+    t.integer "rgt", null: false
+    t.string "description"
+    t.integer "position"
+    t.integer "depth", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lft"], name: "index_categories_on_lft"
+    t.index ["parent_id"], name: "index_categories_on_parent_id"
+    t.index ["rgt"], name: "index_categories_on_rgt"
+  end
+
   create_table "line_items", force: :cascade do |t|
     t.integer "variant_id"
     t.integer "order_id"
@@ -72,6 +87,15 @@ ActiveRecord::Schema.define(version: 20171230135854) do
     t.datetime "updated_at", null: false
     t.index ["ship_address_id"], name: "index_orders_on_ship_address_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
+  create_table "product_categories", force: :cascade do |t|
+    t.integer "product_id"
+    t.integer "category_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_product_categories_on_category_id"
+    t.index ["product_id"], name: "index_product_categories_on_product_id"
   end
 
   create_table "product_properties", force: :cascade do |t|

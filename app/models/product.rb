@@ -22,7 +22,8 @@ class Product < ApplicationRecord
   ].each do |method_name|
     delegate method_name, :"#{method_name}=", to: :find_or_build_master
   end
-
+  has_many :product_categories, dependent: :destroy
+  has_many :categories, through: :product_categories
 
   def find_or_build_master
     master || build_master

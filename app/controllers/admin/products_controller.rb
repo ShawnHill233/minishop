@@ -9,10 +9,11 @@ module Admin
       begin
         params = product_params
         image_urls = params.delete(:images)
-        @product = Product.create!(product_params)
+        @product = Product.new(product_params)
         image_urls.each do |image_url|
           @product.images << Image.create(url: image_url)
         end
+        @product.save
         redirect_to admin_products_path
       end
     end
