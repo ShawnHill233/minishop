@@ -24,6 +24,8 @@ class Product < ApplicationRecord
   end
   has_many :product_categories, dependent: :destroy
   has_many :categories, through: :product_categories
+  has_one :product_brand
+  has_one :brand, through: :product_brand
 
   def find_or_build_master
     master || build_master

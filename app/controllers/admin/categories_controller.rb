@@ -1,6 +1,6 @@
 module Admin
   class CategoriesController < AdminController
-    before_action :set_category, only: [:edit, :destroy]
+    before_action :set_category, only: [:edit, :update, :destroy]
     def index
       @categories = Category.all
     end
@@ -16,6 +16,11 @@ module Admin
     end
 
     def edit
+    end
+
+    def update
+      @category.update(category_params)
+      redirect_to admin_categories_path
     end
 
     def destroy

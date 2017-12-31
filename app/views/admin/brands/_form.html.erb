@@ -1,0 +1,16 @@
+<%= form_for [:admin, @brand] do |f| %>
+  <div class="form-group">
+    <label>品牌名称</label>
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <label>品牌图标</label>
+    <input type="file" id="upload" />
+  </div>
+  <div class="form-group">
+    <label>排序</label>
+    <%= f.text_field :position, class: 'form-control' %>
+  </div>
+  <button type="submit" class="btn btn-default">确定保存</button>
+  <button type="reset" class="btn btn-default">取消</button>
+<% end %>

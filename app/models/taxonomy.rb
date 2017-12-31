@@ -1,2 +1,0 @@
-class Taxonomy < ApplicationRecord
-end
