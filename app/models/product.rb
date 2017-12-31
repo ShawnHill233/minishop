@@ -23,6 +23,7 @@ class Product < ApplicationRecord
     delegate method_name, :"#{method_name}=", to: :find_or_build_master
   end
 
+
   def find_or_build_master
     master || build_master
   end

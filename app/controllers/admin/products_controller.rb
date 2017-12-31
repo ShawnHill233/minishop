@@ -1,5 +1,6 @@
 module Admin
   class ProductsController < AdminController
+    before_action :set_product, only: [:show, :edit, :update, :destroy]
     def new
       @product = Product.new
     end
@@ -8,7 +9,7 @@ module Admin
       begin
         params = product_params
         image_urls = params.delete(:images)
-        @product = Product.create(product_params)
+        @product = Product.create!(product_params)
         image_urls.each do |image_url|
           @product.images << Image.create(url: image_url)
         end
@@ -27,8 +28,29 @@ module Admin
     def edit
     end
 
+    def update
+      begin
+        params = product_params
+        image_urls = params.delete(:images)
+        @product.update(product_params)
+        @product.images.delete_all
+        image_urls.each do |image_url|
+          @product.images << Image.create(url: image_url)
+        end
+        redirect_to admin_products_path
+      end
+    end
+
+    def destroy
+      @product.destroy
+      redirect_to admin_products_path
+    end
+
 
     private
+    def set_product
+      @product = Product.find(params[:id])
+    end
     def product_params
       params[:product].permit!
     end
