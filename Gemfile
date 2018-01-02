@@ -38,6 +38,11 @@ gem 'bootstrap_sb_admin_base_v2'
 gem 'jquery-datatables-rails', '~> 3.4.0'
 gem 'awesome_nested_set'
 
+gem 'grape', '1.0.1'
+gem 'grape-entity', '0.6.0'
+gem 'kaminari'
+gem 'grape-kaminari', :github => 'joshmn/grape-kaminari'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
