@@ -1,0 +1,8 @@
+<tr>
+  <td><%= banner.product.name %></td>
+  <td><%= banner.position %></td>
+  <td>
+    <%= link_to '编辑', edit_admin_banner_path(banner) %>
+    <%= link_to '删除', admin_banner_path(banner), method: :delete %>
+  </td>
+</tr>

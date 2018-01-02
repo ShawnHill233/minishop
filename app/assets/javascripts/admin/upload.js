@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    var body = $('body')
     //upload
     var client = new OSS.Wrapper({
         region: 'oss-cn-beijing',
@@ -10,14 +11,19 @@ $(document).ready(function() {
     });
 
     if($('#upload').length > 0){
-        document.getElementById('upload').addEventListener('change', function (e) {
+        body.on('change', '#upload', function (e) {
             var file = e.target.files[0];
             console.log(file)
             var storeAs = guid();
             console.log(file.name + ' => ' + storeAs);
             client.multipartUpload(storeAs, file).then(function (result) {
                 console.log(result);
-                process_multi_image(result['url'])
+                image_url = result['url'];
+                if($(this).is('[multiple]')){
+                    process_multi_image(image_url)
+                }else{
+                    process_single_image(image_url)
+                }
             }).catch(function (err) {
                 console.log(err);
             });
@@ -26,7 +32,10 @@ $(document).ready(function() {
 
     //.upload
 
-    //上传后显示到页面
+
+    var process_single_image = function (image_url) {
+       $('#image_url').val(image_url);
+    };
     var process_multi_image = function (image_url) {
         if ($('div').hasClass('multiple_picture')) {
             $('.multiple_picture').find('.clear-fix').append(
@@ -44,7 +53,7 @@ $(document).ready(function() {
         } else {
             $('#multi_image_upload').text('继续上传');
         }
-    }
+    };
 
 
 
