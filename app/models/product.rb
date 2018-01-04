@@ -22,13 +22,23 @@ class Product < ApplicationRecord
   ].each do |method_name|
     delegate method_name, :"#{method_name}=", to: :find_or_build_master
   end
+
   has_many :product_categories, dependent: :destroy
   has_many :categories, through: :product_categories
-  has_one :product_brand
+  has_one :product_brand, dependent: :destroy
   has_one :brand, through: :product_brand
+
+  after_save :save_master
 
   def find_or_build_master
     master || build_master
+  end
+
+  # there's a weird quirk with the delegate stuff that does not automatically save the delegate object
+  # when saving so we force a save using a hook
+  # Fix for issue #5306
+  def save_master
+    master.save!
   end
 
 end

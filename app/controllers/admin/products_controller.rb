@@ -7,14 +7,13 @@ module Admin
 
     def create
       begin
-        params = product_params
-        image_urls = params.delete(:images)
         @product = Product.new(product_params)
-        image_urls.each do |image_url|
-          @product.images << Image.create(url: image_url)
+        if set_images && set_brand && @product.save
+          redirect_to admin_products_path
+        else
+          flash[:error] = "创建失败：#{@product.errors.full_messages}"
+          redirect_to :new
         end
-        @product.save
-        redirect_to admin_products_path
       end
     end
 
@@ -31,14 +30,14 @@ module Admin
 
     def update
       begin
-        params = product_params
-        image_urls = params.delete(:images)
-        @product.update(product_params)
-        @product.images.delete_all
-        image_urls.each do |image_url|
-          @product.images << Image.create(url: image_url)
+        puts "jfiojfoiwejfojweojfoewjfoj"
+        puts params
+        if set_images && set_brand && @product.update(product_params) && @product.save
+          redirect_to admin_products_path
+        else
+          flash[:error] = "更新失败：#{@product.errors.full_messages}"
+          redirect_to edit_admin_product_path(@product)
         end
-        redirect_to admin_products_path
       end
     end
 
@@ -49,6 +48,20 @@ module Admin
 
 
     private
+    def set_images
+      @product.images.delete_all unless @product.new_record?
+      if params[:images].present?
+        params[:images].each do |image_url|
+          @product.images << Image.create(url: image_url)
+        end
+      end
+      true
+    end
+    def set_brand
+      brand = Brand.find(params[:brand_id])
+      @product.brand = brand
+    end
+
     def set_product
       @product = Product.find(params[:id])
     end

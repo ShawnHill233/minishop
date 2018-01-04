@@ -19,7 +19,7 @@ $(document).ready(function() {
             client.multipartUpload(storeAs, file).then(function (result) {
                 console.log(result);
                 image_url = result['url'];
-                if($(this).is('[multiple]')){
+                if($('#upload').is('[multiple]')){
                     process_multi_image(image_url)
                 }else{
                     process_single_image(image_url)

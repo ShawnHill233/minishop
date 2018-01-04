@@ -12,11 +12,15 @@ class ProductAPI < Grape::API
             X-Prev-Page: 上一页的页数'
     paginate offset: false
     params do
+      optional :category_id, type: Integer, desc: '分类id'
+      optional :brand_id, type: Integer, desc: '品牌id'
       optional :page, type: Integer, desc: '查询的页数,默认是1'
       optional :per_page, type: Integer, desc: '每页显示的数量,默认是25'
     end
     get do
       products = Product.all
+      products = products.join(:catgories).where(categories: {id: params[:category_id]}) if params[:category_id].present?
+      products = products.join(:brand).where(brand: {id: params[:brand_id]}) if params[:brand_id].present?
       present products: paginate(products)
     end
 
