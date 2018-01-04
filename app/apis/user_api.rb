@@ -5,9 +5,7 @@ class UserAPI < Grape::API
     post :login do
       puts "code is: #{params[:code]}"
       puts "appid is: #{Settings.wx_appid}"
-      response = Unirest.get("https://api.weixin.qq.com/sns/jscode2session",
-                             parameters: {appid: Settings.wx_appid, secret: Settings.wx_secret,
-                                          js_code: params[:code], grant_type: 'authorization_code'})
+      response = Unirest.get("https://api.weixin.qq.com/sns/jscode2session?appid=#{Settings.wx_appid}&secret=#{Settings.wx_secret}&js_code=#{params[:code]}&grant_type=authorization_code")
       puts "resonse is: #{response.body}"
       openid = response.body['openid']
       if openid.present?

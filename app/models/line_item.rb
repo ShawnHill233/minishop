@@ -1,12 +1,18 @@
 class LineItem < ApplicationRecord
 
-  with_options inverse_of: :line_items do
-    belongs_to :cart
-    belongs_to :order
-    belongs_to :variant
-  end
+  belongs_to :cart, optional: true
+  belongs_to :order, optional: true
+  belongs_to :variant
 
   has_one :product, through: :variant
   delegate :name, :description, :sku, :should_track_inventory?, :product, :options_text, to: :variant
+
+  before_validation :copy_price
+
+  def copy_price
+    if variant
+      self.price = variant.price
+    end
+  end
 
 end

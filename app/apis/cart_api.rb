@@ -4,8 +4,7 @@ class CartAPI < Grape::API
   resources :carts do
     desc '获取购物车商品列表'
     get do
-      line_items = current_user.cart.line_items
-      present line_items, with: Entities::LineItem
+      present current_user.cart, with: Entities::Cart
     end
 
     desc '添加商品到购物车'
@@ -14,7 +13,8 @@ class CartAPI < Grape::API
       requires :quantity, type: Integer, desc: '数量'
     end
     post :add do
-      current_user.cart.add(variant, quantity)
+      current_user.cart.add(params[:variant_id], params[:quantity])
+      status 200
       present current_user.cart, with: Entities::Cart
     end
 
@@ -25,6 +25,7 @@ class CartAPI < Grape::API
     post :remove do
       line_item = LineItem.find(params[:line_item_id])
       current_user.cart.remove(line_item)
+      status 200
       present current_user.cart, with: Entities::Cart
     end
   end

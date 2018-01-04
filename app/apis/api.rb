@@ -11,6 +11,7 @@ class API < Grape::API
     def current_user
       token = request.headers["X-Auth-Token"]
       openid = token
+      puts "openid is: #{openid}"
       @user ||= User.find_by(openid: openid)
 
       if @user.nil?
