@@ -19,16 +19,16 @@ class ProductAPI < Grape::API
     end
     get do
       products = Product.all
-      products = products.join(:catgories).where(categories: {id: params[:category_id]}) if params[:category_id].present?
-      products = products.join(:brand).where(brand: {id: params[:brand_id]}) if params[:brand_id].present?
-      present products: paginate(products)
+      products = products.joins(:catgories).where(categories: {id: params[:category_id]}) if params[:category_id].present?
+      products = products.joins(:brand).where(brands: {id: params[:brand_id]}) if params[:brand_id].present?
+      present paginate(products), with: Entities::Product
     end
 
     route_param :id do
       desc '获取商品详情'
       get do
         product = Product.find(params[:id])
-        present product: product
+        present product, with: Entities::Product
       end
     end
   end

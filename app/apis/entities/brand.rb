@@ -4,7 +4,7 @@ module Entities
     expose :id
     expose :name
     expose :icon do |brand|
-      brand.icon.url
+      brand.icon.full_url
     end
   end
 end

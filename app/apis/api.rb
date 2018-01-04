@@ -23,4 +23,5 @@ class API < Grape::API
 
   mount API::HomePageAPI
   mount API::ProductAPI
+  mount API::BrandAPI
 end

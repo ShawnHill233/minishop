@@ -35,7 +35,7 @@ $(document).ready(function() {
 
 
     var process_single_image = function (filename) {
-        $('#image_url').val(image_url);
+        $('#image_url').val(filename);
     };
     var process_multi_image = function (filename) {
         var image_url = "http://pcyc-public.oss-cn-beijing.aliyuncs.com/" + filename
