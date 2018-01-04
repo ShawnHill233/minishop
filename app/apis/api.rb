@@ -25,4 +25,5 @@ class API < Grape::API
   mount API::ProductAPI
   mount API::BrandAPI
   mount API::CartAPI
+  mount API::UserAPI
 end

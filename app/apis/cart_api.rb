@@ -15,7 +15,7 @@ class CartAPI < Grape::API
     end
     post :add do
       current_user.cart.add(variant, quantity)
-      success_response
+      present current_user.cart, with: Entities::Cart
     end
 
     desc '从购物车移除商品'
@@ -25,7 +25,7 @@ class CartAPI < Grape::API
     post :remove do
       line_item = LineItem.find(params[:line_item_id])
       current_user.cart.remove(line_item)
-      success_response
+      present current_user.cart, with: Entities::Cart
     end
   end
 end

@@ -42,6 +42,8 @@ gem 'grape', '1.0.1'
 gem 'grape-entity', '0.6.0'
 gem 'kaminari'
 gem 'grape-kaminari', :github => 'joshmn/grape-kaminari'
+gem 'unirest'
+gem 'settingslogic'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
