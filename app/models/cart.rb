@@ -1,7 +1,13 @@
 class Cart < ApplicationRecord
+
   belongs_to :user
+  has_many :line_items, -> { order(:created_at) }, inverse_of: :cart, dependent: :destroy
 
-  has_many :line_items, -> { order(:created_at) }, inverse_of: :order, dependent: :destroy
+  def add(variant, quantity)
+    line_items.create(variant: variant, quantity: quantity)
+  end
 
-  accepts_nested_attributes_for :line_items
+  def remove(line_item)
+    line_item.destroy
+  end
 end
