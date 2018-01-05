@@ -28,5 +28,38 @@ class CartAPI < Grape::API
       status 200
       present current_user.cart, with: Entities::Cart
     end
+
+    desc '更新购物车商品'
+    params do
+      requires :line_item_id, type: Integer, desc: '商品项ID'
+      requires :quantity, type: Integer, desc: '数量'
+    end
+    post :update do
+      line_item = LineItem.find(params[:line_item_id])
+      line_item.update(quantity: params[:quantity])
+      status 200
+      present current_user.cart, with: Entities::Cart
+    end
+
+    desc '勾选商品项'
+    params do
+      requires :line_item_id, type: Integer, desc: '商品项ID'
+      requires :checked, type: Boolean, desc: 'true 勾选，false 未勾选'
+    end
+    post :check do
+      line_item = LineItem.find(params[:line_item_id])
+      line_item.update(checked: params[:checked])
+      status 200
+      present current_user.cart, with: Entities::Cart
+    end
+
+    params do
+      requires :checked, type: Boolean, desc: 'true 勾选，false 未勾选'
+    end
+    post :check_all do
+      current_user.cart.line_items.update_all(checked: params[:checked])
+      status 200
+      present current_user.cart, with: Entities::Cart
+    end
   end
 end

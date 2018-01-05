@@ -17,7 +17,7 @@ class Cart < ApplicationRecord
     line_item.destroy
   end
 
-  def total_amount
-    line_items.inject(0){ |sum, item| sum + item.price * item.quantity }
+  def checked_amount
+    line_items.where(checked: true).inject(0){ |sum, item| sum + item.price * item.quantity }
   end
 end

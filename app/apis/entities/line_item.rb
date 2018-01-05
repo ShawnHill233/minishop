@@ -4,6 +4,7 @@ module Entities
     expose :id
     expose :quantity
     expose :price
+    expose :checked
     expose :name do |line_item|
       line_item.product.name
     end
