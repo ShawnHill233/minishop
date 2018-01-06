@@ -32,6 +32,13 @@ class OrderAPI < Grape::API
         present order, with: Entities::Order
       end
 
+      desc '到店支付'
+      post :delay_pay do
+        order = current_user.orders.find(params[:id])
+        order.delay_pay!
+        success_response
+      end
+
     end
 
   end

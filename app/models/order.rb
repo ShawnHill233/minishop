@@ -16,7 +16,8 @@ class Order < ApplicationRecord
   aasm column: :state do
     state :pending, initial: true   #待支付
     state :payment                  #支付中
-    state :completed                #完成交易,已评论
+    state :deliver                  #待发货（服务）
+    state :completed                #完成交易（服务）
     state :canceled
 
     event :start_pay do
@@ -42,6 +43,12 @@ class Order < ApplicationRecord
           self.payment_state = 'failed'
           self.save
         end
+      end
+    end
+
+    event :delay_pay do
+      transitions from: [:payment], to: :completed do
+
       end
     end
 
