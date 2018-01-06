@@ -1,7 +1,7 @@
 class Cart < ApplicationRecord
 
   belongs_to :user
-  has_many :line_items, -> { order(:created_at) }, inverse_of: :cart, dependent: :destroy
+  has_many :line_items, -> { order(:created_at) }, inverse_of: :cart
 
   def add(variant_id, quantity)
     line_item = line_items.find_by(variant_id: variant_id)
@@ -13,11 +13,17 @@ class Cart < ApplicationRecord
     line_item.save!
   end
 
-  def remove(line_item)
+  def remove!(line_item)
     line_item.destroy
   end
 
   def checked_amount
-    line_items.where(checked: true).inject(0){ |sum, item| sum + item.price * item.quantity }
+    line_items.checked.inject(0){ |sum, item| sum + item.price * item.quantity }
+  end
+
+  def submit!
+    line_items = self.line_items.checked
+    order = Order.create_order(self.user, line_items)
+    return order
   end
 end

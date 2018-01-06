@@ -24,7 +24,7 @@ class CartAPI < Grape::API
     end
     post :remove do
       line_item = LineItem.find(params[:line_item_id])
-      current_user.cart.remove(line_item)
+      current_user.cart.remove!(line_item)
       status 200
       present current_user.cart, with: Entities::Cart
     end

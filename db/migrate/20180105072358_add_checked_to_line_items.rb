@@ -1,5 +1,5 @@
 class AddCheckedToLineItems < ActiveRecord::Migration[5.1]
   def change
-    add_column :line_items, :checked, :boolean
+    add_column :line_items, :checked, :boolean, default: true
   end
 end

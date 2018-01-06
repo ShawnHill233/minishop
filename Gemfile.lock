@@ -9,6 +9,8 @@ GIT
 GEM
   remote: http://gems.ruby-china.org/
   specs:
+    aasm (4.12.3)
+      concurrent-ruby (~> 1.0)
     actioncable (5.1.4)
       actionpack (= 5.1.4)
       nio4r (~> 2.0)
@@ -263,6 +265,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  aasm
   awesome_nested_set
   bcrypt (~> 3.1.7)
   bootstrap_sb_admin_base_v2

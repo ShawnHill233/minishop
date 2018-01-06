@@ -9,6 +9,8 @@ class LineItem < ApplicationRecord
 
   before_validation :copy_price
 
+  scope :checked, -> { where(checked: true) }
+
   def copy_price
     if variant
       self.price = variant.price
