@@ -5,7 +5,8 @@ class OrderAPI < Grape::API
 
     desc '获取我的订单列表'
     get do
-      present current_user.orders, with: Entities::Order
+      orders = current_user.orders.order(created_at: :desc)
+      present orders, with: Entities::Order
     end
 
     desc '创建订单, 去付款'
