@@ -3,6 +3,8 @@ module Admin
     before_action :set_product, only: [:show, :edit, :update, :destroy]
     def new
       @product = Product.new
+      @product_property = @product.product_properties.build
+      @properties = @product_property.build_property
     end
 
     def create

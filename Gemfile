@@ -45,6 +45,7 @@ gem 'grape-kaminari', :github => 'joshmn/grape-kaminari'
 gem 'unirest'
 gem 'settingslogic'
 gem 'aasm'
+gem "cocoon"
 
 
 group :development, :test do

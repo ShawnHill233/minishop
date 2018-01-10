@@ -23,10 +23,15 @@ class Product < ApplicationRecord
     delegate method_name, :"#{method_name}=", to: :find_or_build_master
   end
 
+  has_many :product_properties, dependent: :destroy, inverse_of: :product
+  has_many :properties, through: :product_properties
+  accepts_nested_attributes_for :product_properties
+
   has_many :product_categories, dependent: :destroy
   has_many :categories, through: :product_categories
   has_one :product_brand, dependent: :destroy
   has_one :brand, through: :product_brand
+
 
   after_save :save_master
 

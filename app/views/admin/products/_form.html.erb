@@ -33,7 +33,10 @@
   </div>
 
   <div class="form-group">
-    <label>属性</label>
+    <%= f.fields_for :product_properties do |product_property_form| %>
+      <%= render 'product_property_fields', :f => product_property_form %>
+    <% end %>
+    <%= link_to_add_association '添加属性', f, :product_properties %>
   </div>
   <div class="form-group">
     <label>上架</label>
