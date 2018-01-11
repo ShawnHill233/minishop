@@ -14,7 +14,7 @@ module Admin
           redirect_to admin_products_path
         else
           flash[:error] = "创建失败：#{@product.errors.full_messages}"
-          redirect_to :new
+          render :new
         end
       end
     end

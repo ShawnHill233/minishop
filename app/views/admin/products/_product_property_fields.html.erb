@@ -1,6 +1,6 @@
 <div class="nested-fields">
   <label>属性名</label>
-  <%= f.text_field :property_name %>
+  <%= f.select :property_name, options_from_collection_for_select(Property.all, :name, :name, f.object.property_name) %>
 
   <label>属性值</label>
   <%= f.text_field :value %>

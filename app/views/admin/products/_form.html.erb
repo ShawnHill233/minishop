@@ -32,6 +32,12 @@
     </ul>
   </div>
 
+  <% if @product.new_record? %>
+    <div class="form-group">
+      <label>原型</label>
+      <%= f.select :prototype_id, content_tag(:option,'无',:value=>"") + options_from_collection_for_select(Prototype.all, :id, :name, @product.prototype_id) %>
+    </div>
+  <% end %>
   <div class="form-group">
     <%= f.fields_for :product_properties do |product_property_form| %>
       <%= render 'product_property_fields', :f => product_property_form %>

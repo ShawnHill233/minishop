@@ -25,7 +25,7 @@ class Product < ApplicationRecord
 
   has_many :product_properties, dependent: :destroy, inverse_of: :product
   has_many :properties, through: :product_properties
-  accepts_nested_attributes_for :product_properties
+  accepts_nested_attributes_for :product_properties, :allow_destroy => true
 
   has_many :product_categories, dependent: :destroy
   has_many :categories, through: :product_categories
@@ -33,6 +33,7 @@ class Product < ApplicationRecord
   has_one :brand, through: :product_brand
 
 
+  after_create :add_associations_from_prototype
   after_save :save_master
 
   def find_or_build_master
@@ -44,6 +45,21 @@ class Product < ApplicationRecord
   # Fix for issue #5306
   def save_master
     master.save!
+  end
+
+  # Adding properties and option types on creation based on a chosen prototype
+  attr_reader :prototype_id
+  def prototype_id=(value)
+    @prototype_id = value.to_i
+  end
+
+  private
+  def add_associations_from_prototype
+    if prototype_id && prototype = Prototype.find_by(id: prototype_id)
+      prototype.properties.each do |property|
+        product_properties.create(property: property)
+      end
+    end
   end
 
 end
