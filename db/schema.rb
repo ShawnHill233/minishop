@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180105072358) do
+ActiveRecord::Schema.define(version: 20180111023821) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string "name"
@@ -164,6 +164,15 @@ ActiveRecord::Schema.define(version: 20180105072358) do
     t.datetime "updated_at", null: false
     t.index ["property_id"], name: "index_properties_prototypes_on_property_id"
     t.index ["prototype_id"], name: "index_properties_prototypes_on_prototype_id"
+  end
+
+  create_table "property_prototypes", force: :cascade do |t|
+    t.integer "property_id"
+    t.integer "prototype_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["property_id"], name: "index_property_prototypes_on_property_id"
+    t.index ["prototype_id"], name: "index_property_prototypes_on_prototype_id"
   end
 
   create_table "prototypes", force: :cascade do |t|

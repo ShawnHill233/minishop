@@ -1,0 +1,8 @@
+<tr>
+  <td><%= prototype.name %></td>
+  <td><%= prototype.properties.map(&:name).join(',') %></td>
+  <td>
+    <%= link_to '编辑', edit_admin_prototype_path(prototype) %>
+    <%= link_to '删除', admin_prototype_path(prototype), method: :delete %>
+  </td>
+</tr>

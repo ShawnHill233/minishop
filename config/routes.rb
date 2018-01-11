@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     resources :brands
     resources :orders
     resources :banners
+    resources :prototypes
   end
 
   mount API, at: '/api'

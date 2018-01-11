@@ -1,0 +1,15 @@
+<%= form_for [:admin, @prototype] do |f| %>
+  <div class="form-group">
+    <label>名称</label>
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.fields_for :property_prototypes do |property_form| %>
+      <%= render 'property_prototype_fields', :f => property_form %>
+    <% end %>
+    <%= link_to_add_association '添加属性', f, :property_prototypes %>
+  </div>
+  
+  <button type="submit" class="btn btn-default">确定保存</button>
+  <button type="reset" class="btn btn-default">取消</button>
+<% end %>
