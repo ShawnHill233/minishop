@@ -46,6 +46,7 @@ gem 'unirest'
 gem 'settingslogic'
 gem 'aasm'
 gem "cocoon"
+gem 'nokogiri'
 
 
 group :development, :test do

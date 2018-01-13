@@ -43,7 +43,9 @@ class OrderAPI < Grape::API
 
       desc '获取小程序支付参数'
       get :mp_pay_params do
-        present pay_params: Order.mp_pay_params(params[:number])
+        order = current_user.orders.find_by(number: params[:number])
+        pay_params = WxPay.mp_pay_params(current_user.openid, order)
+        present pay_params: pay_params
       end
 
 

@@ -1,5 +1,4 @@
 class Order < ApplicationRecord
-  require 'digest'
 
   belongs_to :user
   has_many :line_items, -> { order(:created_at) }, inverse_of: :order, dependent: :destroy
@@ -83,6 +82,7 @@ class Order < ApplicationRecord
     end
 
     def mp_pay_params(order_number)
+
       time_stamp = Time.now.to_i.to_s
       nonce_str = SecureRandom.hex
       package = "prepay_id=#{order_number}"
