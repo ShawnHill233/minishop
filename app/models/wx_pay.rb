@@ -1,24 +1,17 @@
 class WxPay
   require 'digest'
   require 'net/http'
+  require 'net/https'
 
   UNIFIED_ORDER_URL = 'https://api.mch.weixin.qq.com/pay/unifiedorder'
-
-  private
-  def post_xml(url_string, xml_string)
-    uri = URI.parse url_string
-    request = Net::HTTP::Post.new uri.path
-    request.body = xml_string
-    request.content_type = 'text/xml'
-    response = Net::HTTP.new(uri.host, uri.port).start { |http| http.request request }
-    response.body
-  end
 
   class << self
 
     # 统一下单
     def unifiedorder(openid, order)
-      sign_string="appid=#{Settings.wx_appid}&attach=平昌养车&body=购买商品&mch_id=#{Settings.merchant_id}&nonceStr=#{nonce_str}&notify_url=#{Settings.pay_notify_url}&openid=#{openid}&out_trade_no=#{order.number}&spbill_create_ip=127.0.0.1&total_fee=#{order.payment_total}&trade_type=JSAPI&key=#{Settings.wx_secret}"
+      nonce_str = SecureRandom.hex
+      total_fee = (order.payment_total * 100).to_i
+      sign_string="appid=#{Settings.wx_appid}&attach=平昌养车&body=购买商品&mch_id=#{Settings.merchant_id}&nonce_str=#{nonce_str}&notify_url=#{Settings.pay_notify_url}&openid=#{openid}&out_trade_no=#{order.number}&spbill_create_ip=127.0.0.1&total_fee=#{total_fee}&trade_type=JSAPI&key=#{Settings.merchant_secret}"
       sign = Digest::MD5.hexdigest(sign_string).upcase
       xml_str = <<-EOF
         <xml>
@@ -26,20 +19,22 @@ class WxPay
            <attach>平昌养车</attach>
            <body>购买商品</body>
            <mch_id>#{Settings.merchant_id}</mch_id>
-           <detail><![CDATA[{ "goods_detail":[ { "goods_id":"iphone6s_16G", "wxpay_goods_id":"1001", "goods_name":"iPhone6s 16G", "quantity":1, "price":528800, "goods_category":"123456", "body":"苹果手机" }, { "goods_id":"iphone6s_32G", "wxpay_goods_id":"1002", "goods_name":"iPhone6s 32G", "quantity":1, "price":608800, "goods_category":"123789", "body":"苹果手机" } ] }]]></detail>
-           <nonce_str>#{SecureRandom.hex}</nonce_str>
+           <nonce_str>#{nonce_str}</nonce_str>
            <notify_url>#{Settings.pay_notify_url}</notify_url>
            <openid>#{openid}</openid>
            <out_trade_no>#{order.number}</out_trade_no>
            <spbill_create_ip>127.0.0.1</spbill_create_ip>
-           <total_fee>#{order.payment_total}</total_fee>
+           <total_fee>#{total_fee}</total_fee>
            <trade_type>JSAPI</trade_type>
            <sign>#{sign}</sign>
         </xml>
       EOF
 
       response = post_xml(UNIFIED_ORDER_URL, xml_str)
-      prepay_id = Nokogiri::XML(response.body.read).xpath('//prepay_id').text
+      puts "response body is... #{response.body}"
+      prepay_id = Nokogiri::XML(response.body).xpath('//prepay_id').text
+      puts "prepay_id: #{prepay_id}"
+      prepay_id
     end
 
     def mp_pay_params(openid, order)
@@ -59,6 +54,21 @@ class WxPay
           signType: sign_type,
           paySign: pay_sign
       }
+    end
+
+    private
+    def post_xml(url_string, xml_string)
+      uri = URI.parse url_string
+      puts "uri: #{uri}, uri.path: #{uri.path}, uri.host: #{uri.host}, uri.port: #{uri.port}"
+
+      https = Net::HTTP.new(uri.host,uri.port)
+      https.use_ssl = true
+      request = Net::HTTP::Post.new uri.path
+      request.body = xml_string
+      request.content_type = 'text/xml'
+      response = https.request request
+
+      response
     end
   end
 end
