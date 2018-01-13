@@ -1,7 +1,6 @@
 module Entities
   class Order < Grape::Entity
     root 'orders'
-    expose :id
     expose :number
     expose :state
     expose :line_items, using: Entities::LineItem

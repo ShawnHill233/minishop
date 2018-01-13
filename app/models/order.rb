@@ -1,4 +1,6 @@
 class Order < ApplicationRecord
+  require 'digest'
+
   belongs_to :user
   has_many :line_items, -> { order(:created_at) }, inverse_of: :order, dependent: :destroy
   accepts_nested_attributes_for :line_items
@@ -78,6 +80,23 @@ class Order < ApplicationRecord
       new_order.save!
       user.cart.line_items.delete(line_items)
       return new_order
+    end
+
+    def mp_pay_params(order_number)
+      time_stamp = Time.now.to_i.to_s
+      nonce_str = SecureRandom.hex
+      package = "prepay_id=#{order_number}"
+      sign_type = 'MD5'
+      sign_string="appId=#{Settings.wx_appid}&nonceStr=#{nonce_str}&package=#{package}&signType=#{sign_type}&timeStamp=#{time_stamp}&key=#{Settings.wx_secret}"
+      pay_sign = Digest::MD5.hexdigest(sign_string).upcase
+
+      params = {
+          timeStamp: time_stamp,
+          nonceStr: nonce_str,
+          package: package,
+          signType: sign_type,
+          paySign: pay_sign
+      }
     end
   end
 end

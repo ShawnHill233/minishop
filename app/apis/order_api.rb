@@ -14,20 +14,21 @@ class OrderAPI < Grape::API
     post do
       order = current_user.cart.submit!
       order.start_pay!
-      success_response
+      status 200
+      present order, with: Entities::Order
     end
 
-    route_param :id do
+    route_param :number do
       desc '获取订单详情'
       get do
-        order = current_user.orders.find(params[:id])
+        order = current_user.orders.find_by(number: params[:number])
         status 200
         present order, with: Entities::Order
       end
 
       desc '取消订单'
       post :cancel do
-        order = current_user.orders.find(params[:id])
+        order = current_user.orders.find_by(number: params[:number])
         order.cancel!
         status 200
         present order, with: Entities::Order
@@ -35,10 +36,16 @@ class OrderAPI < Grape::API
 
       desc '到店支付'
       post :delay_pay do
-        order = current_user.orders.find(params[:id])
+        order = current_user.orders.find_by(number: params[:number])
         order.delay_pay!
         success_response
       end
+
+      desc '获取小程序支付参数'
+      get :mp_pay_params do
+        present pay_params: Order.mp_pay_params(params[:number])
+      end
+
 
     end
 
