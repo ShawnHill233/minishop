@@ -4,9 +4,7 @@ module Entities
     expose :number
     expose :state
     expose :line_items, using: Entities::LineItem
-    expose :total do |order|
-      order.total_amount
-    end
+    expose :payment_total
     expose :created_at do |order|
       order.created_at.strftime("%Y-%m-%d %H:%M")
     end

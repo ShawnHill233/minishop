@@ -69,13 +69,11 @@ class Order < ApplicationRecord
     payment_state == 'paid'
   end
 
-  def total_amount
-    line_items.inject(0){ |sum, item| sum + item.price * item.quantity }
-  end
   class << self
     def create_order(user, line_items)
       new_order = user.orders.new
       new_order.line_items = line_items
+      new_order.payment_total = line_items.inject(0){ |sum, item| sum + item.price * item.quantity }
       new_order.save!
       user.cart.line_items.delete(line_items)
       return new_order

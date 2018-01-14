@@ -30,21 +30,22 @@ class WxPay
         </xml>
       EOF
 
+      puts "request xml string: #{xml_str}"
       response = post_xml(UNIFIED_ORDER_URL, xml_str)
       puts "response body is... #{response.body}"
       prepay_id = Nokogiri::XML(response.body).xpath('//prepay_id').text
+      nonce_str = Nokogiri::XML(response.body).xpath('//nonce_str').text
       puts "prepay_id: #{prepay_id}"
-      prepay_id
+      return prepay_id
     end
 
     def mp_pay_params(openid, order)
       prepay_id = unifiedorder(openid, order)
-
-      time_stamp = Time.now.to_i.to_s
       nonce_str = SecureRandom.hex
+      time_stamp = Time.now.to_i.to_s
       package = "prepay_id=#{prepay_id}"
       sign_type = 'MD5'
-      sign_string="appId=#{Settings.wx_appid}&nonceStr=#{nonce_str}&package=#{package}&signType=#{sign_type}&timeStamp=#{time_stamp}&key=#{Settings.wx_secret}"
+      sign_string="appId=#{Settings.wx_appid}&nonceStr=#{nonce_str}&package=#{package}&signType=#{sign_type}&timeStamp=#{time_stamp}&key=#{Settings.merchant_secret}"
       pay_sign = Digest::MD5.hexdigest(sign_string).upcase
 
       params = {
