@@ -20,6 +20,10 @@ class API < Grape::API
         @user
       end
     end
+
+    def client_ip
+      env['action_dispatch.remote_ip'].to_s
+    end
   end
 
   mount API::HomePageAPI

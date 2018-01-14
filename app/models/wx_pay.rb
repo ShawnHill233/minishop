@@ -8,10 +8,11 @@ class WxPay
   class << self
 
     # 统一下单
-    def unifiedorder(openid, order)
+    def unifiedorder(openid, order, client_ip)
       nonce_str = SecureRandom.hex
       total_fee = (order.payment_total * 100).to_i
-      sign_string="appid=#{Settings.wx_appid}&attach=平昌养车&body=购买商品&mch_id=#{Settings.merchant_id}&nonce_str=#{nonce_str}&notify_url=#{Settings.pay_notify_url}&openid=#{openid}&out_trade_no=#{order.number}&spbill_create_ip=127.0.0.1&total_fee=#{total_fee}&trade_type=JSAPI&key=#{Settings.merchant_secret}"
+      spbill_create_ip = client_ip
+      sign_string="appid=#{Settings.wx_appid}&attach=平昌养车&body=购买商品&mch_id=#{Settings.merchant_id}&nonce_str=#{nonce_str}&notify_url=#{Settings.pay_notify_url}&openid=#{openid}&out_trade_no=#{order.number}&spbill_create_ip=#{spbill_create_ip}&total_fee=#{total_fee}&trade_type=JSAPI&key=#{Settings.merchant_secret}"
       sign = Digest::MD5.hexdigest(sign_string).upcase
       xml_str = <<-EOF
         <xml>
@@ -23,7 +24,7 @@ class WxPay
            <notify_url>#{Settings.pay_notify_url}</notify_url>
            <openid>#{openid}</openid>
            <out_trade_no>#{order.number}</out_trade_no>
-           <spbill_create_ip>127.0.0.1</spbill_create_ip>
+           <spbill_create_ip>#{spbill_create_ip}</spbill_create_ip>
            <total_fee>#{total_fee}</total_fee>
            <trade_type>JSAPI</trade_type>
            <sign>#{sign}</sign>
@@ -39,8 +40,8 @@ class WxPay
       return prepay_id
     end
 
-    def mp_pay_params(openid, order)
-      prepay_id = unifiedorder(openid, order)
+    def mp_pay_params(openid, order, client_ip)
+      prepay_id = unifiedorder(openid, order, client_ip)
       nonce_str = SecureRandom.hex
       time_stamp = Time.now.to_i.to_s
       package = "prepay_id=#{prepay_id}"

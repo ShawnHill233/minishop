@@ -5,7 +5,7 @@ class Order < ApplicationRecord
   accepts_nested_attributes_for :line_items
 
   STATE = %w(pending payment completed canceled)
-  PAYMENT_STATES = %w(failed paid)
+  PAYMENT_STATES = %w(failed paid delay)
   validates_inclusion_of :state, :in => STATE
 
   before_create do
@@ -31,9 +31,6 @@ class Order < ApplicationRecord
         after do
           self.payment_state = 'paid'
           self.save
-          PaymentLog.create_log(self)
-          PointsJob.perform_async('payment_completed', self.user_id, self.amount/100/10) if self.amount.present?
-          ExperienceIncJob.perform_async(self.user.persistent_token, 'payment_completed')
         end
       end
     end
@@ -48,8 +45,11 @@ class Order < ApplicationRecord
     end
 
     event :delay_pay do
-      transitions from: [:payment], to: :completed do
-
+      transitions from: [:payment], to: :payment do
+        after do
+          self.payment_state = 'delay'
+          self.save
+        end
       end
     end
 
