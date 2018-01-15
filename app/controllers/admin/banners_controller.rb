@@ -16,6 +16,9 @@ module Admin
     end
 
     def edit
+    end
+
+    def update
       @banner.update(banner_params)
       redirect_to admin_banners_path
     end
