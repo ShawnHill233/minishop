@@ -5,7 +5,7 @@ class OrderAPI < Grape::API
 
     desc '获取我的订单列表'
     get do
-      orders = current_user.orders.order(created_at: :desc)
+      orders = current_user.orders.order(created_at: :desc).decorate
       present orders, with: Entities::Order
     end
 
@@ -21,7 +21,7 @@ class OrderAPI < Grape::API
     route_param :number do
       desc '获取订单详情'
       get do
-        order = current_user.orders.find_by(number: params[:number])
+        order = current_user.orders.find_by(number: params[:number]).decorate
         status 200
         present order, with: Entities::Order
       end

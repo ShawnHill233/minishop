@@ -47,6 +47,7 @@ gem 'settingslogic'
 gem 'aasm'
 gem "cocoon"
 gem 'nokogiri'
+gem 'draper'
 
 
 group :development, :test do
