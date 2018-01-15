@@ -13,8 +13,8 @@ class Cart < ApplicationRecord
     line_item.save!
   end
 
-  def remove!(line_item)
-    line_item.destroy
+  def remove!(line_items)
+    line_items.destroy_all
   end
 
   def checked_amount

@@ -8,5 +8,6 @@ module Entities
     expose :images do |product|
       product.images.map(&:full_url)
     end
+    expose :product_properties, using: Entities::ProductProperty
   end
 end

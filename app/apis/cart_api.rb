@@ -20,11 +20,13 @@ class CartAPI < Grape::API
 
     desc '从购物车移除商品'
     params do
-      requires :line_item_id, type: Integer, desc: '商品项ID'
+      requires :line_item_ids, type: String, desc: '商品项ID数组'
     end
     post :remove do
-      line_item = LineItem.find(params[:line_item_id])
-      current_user.cart.remove!(line_item)
+      line_item_ids = params[:line_item_ids].split(',').map { |id| id.to_i }
+      puts "line_item_ids: #{line_item_ids}"
+      line_items = LineItem.where(id: line_item_ids)
+      current_user.cart.remove!(line_items)
       status 200
       present current_user.cart, with: Entities::Cart
     end
