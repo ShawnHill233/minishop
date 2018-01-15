@@ -25,13 +25,14 @@
   </div>
 
   <div class="multiple_picture" name_value="images[]">
-    <ul id="max-picture-number" class="clear-fix <%= 'data' unless @product.new_record? %>" max-picture-number="6">
+    <ul id="max-picture-number" class="edit_product_pictures clear-fix <%= 'data' unless @product.new_record? %>" max-picture-number="6">
       <% @product.images.each do |image| %>
         <li><input type="hidden" name="images[]" value="<%= image.url %>"/><img src="<%= image.full_url + '?x-oss-process=image/resize,w_150' %>" alt="图片说明"/><a class="hit_ajax delete" >删除</a></li>
       <% end %>
     </ul>
   </div>
 
+  <hr />
   <% if @product.new_record? %>
     <div class="form-group">
       <label>原型</label>
