@@ -12,7 +12,7 @@ module Entities
       order.may_cancel?
     end
     expose :may_payment do |order|
-      order.state == 'payment'
+      order.payment?
     end
   end
 end
