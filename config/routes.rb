@@ -8,7 +8,11 @@ Rails.application.routes.draw do
     resources :products
     resources :categories
     resources :brands
-    resources :orders
+    resources :orders do
+      member do
+        post :complete
+      end
+    end
     resources :banners
     resources :prototypes
   end

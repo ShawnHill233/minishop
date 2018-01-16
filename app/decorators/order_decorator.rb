@@ -29,4 +29,15 @@ class OrderDecorator < ApplicationDecorator
 
   end
 
+  def payment_state
+    case object.payment_state
+      when 'delay'
+        '到店支付'
+      when 'paid'
+        '已付款'
+      else
+        '未付款'
+    end
+  end
+
 end
