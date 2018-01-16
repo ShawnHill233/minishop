@@ -9,8 +9,9 @@ class Order < ApplicationRecord
   validates_inclusion_of :state, :in => STATE
 
   before_create do
-    time_now = "#{Time.now.to_i}"
-    self.number = "#{time_now[-5..-1]}#{user.id*2}#{time_now[-10..-6]}"
+    date = Date.today.strftime("%Y%m%d")
+    now = Time.now.to_i.to_s
+    self.number = "#{date}#{user.id}#{now[-5..-1]}"
   end
 
   include AASM
