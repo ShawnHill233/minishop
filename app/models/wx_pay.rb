@@ -11,31 +11,29 @@ class WxPay
     def unifiedorder(openid, order, client_ip)
       nonce_str = SecureRandom.hex
       total_fee = (order.payment_total * 100).to_i
-      spbill_create_ip = client_ip
-      sign_string="appid=#{Settings.wx_appid}&attach=平昌养车&body=购买商品&mch_id=#{Settings.merchant_id}&nonce_str=#{nonce_str}&notify_url=#{Settings.pay_notify_url}&openid=#{openid}&out_trade_no=#{order.number}&spbill_create_ip=#{spbill_create_ip}&total_fee=#{total_fee}&trade_type=JSAPI&key=#{Settings.merchant_secret}"
-      sign = Digest::MD5.hexdigest(sign_string).upcase
-      xml_str = <<-EOF
-        <xml>
-           <appid>#{Settings.wx_appid}</appid>
-           <attach>平昌养车</attach>
-           <body>购买商品</body>
-           <mch_id>#{Settings.merchant_id}</mch_id>
-           <nonce_str>#{nonce_str}</nonce_str>
-           <notify_url>#{Settings.pay_notify_url}</notify_url>
-           <openid>#{openid}</openid>
-           <out_trade_no>#{order.number}</out_trade_no>
-           <spbill_create_ip>#{spbill_create_ip}</spbill_create_ip>
-           <total_fee>#{total_fee}</total_fee>
-           <trade_type>JSAPI</trade_type>
-           <sign>#{sign}</sign>
-        </xml>
-      EOF
+      params = {
+          appid: Settings.wx_appid,
+          attach: '平昌养车',
+          body: '购买商品',
+          mch_id: Settings.merchant_id,
+          nonce_str: nonce_str,
+          notify_url: Settings.pay_notify_url,
+          openid: openid,
+          out_trade_no: order.number,
+          spbill_create_ip: client_ip,
+          total_fee: total_fee,
+          trade_type: 'JSAPI',
+      }
+      params_str = params.sort.map { |p| p.join('=') }.join('&')
+      sign_str_temp = params_str + "&key=#{Settings.merchant_secret}"
+      sign = Digest::MD5.hexdigest(sign_str_temp).upcase
+      params[:sign] = sign
+      xml_str = params.to_xml(:skip_instruct => true, root: 'xml', :dasherize => false)
 
       puts "request xml string: #{xml_str}"
       response = post_xml(UNIFIED_ORDER_URL, xml_str)
       puts "response body is... #{response.body}"
       prepay_id = Nokogiri::XML(response.body).xpath('//prepay_id').text
-      nonce_str = Nokogiri::XML(response.body).xpath('//nonce_str').text
       puts "prepay_id: #{prepay_id}"
       return prepay_id
     end
