@@ -6,17 +6,19 @@ set :application, "minishop"
 server 'aliyun',  user: 'pcyc', roles: [:web, :app, :db], primary: true
 set :deploy_to, "/var/www/#{fetch(:application)}"
 
-set :repo_url, "git@github.com:ShawnHill233/minishop.git"
-set :branch, "master"
-
 set :tmp_dir, "/home/pcyc/tmp"
 set :linked_files, %w{config/database.yml}       #需要做链接的文件，一般database.yml和部分配置文件
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
-set :pty,             true
-set :use_sudo,        false
-set :stage,           :production
-set :deploy_via,      :remote_cache
+set :repo_url, "git@github.com:ShawnHill233/minishop.git"
+set :branch,        :master
+# set :format,        :pretty
+# set :log_level,     :debug
+# set :keep_releases, 5
+# set :pty,             true
+# set :use_sudo,        false
+# set :stage,           :production
+# set :deploy_via,      :remote_cache
 # set :ssh_options,     { forward_agent: true, user: fetch(:user), keys: %w(~/.ssh/id_rsa.pub) }
 
 # PUMA
