@@ -7,7 +7,7 @@ server 'aliyun',  user: 'pcyc', roles: [:web, :app, :db], primary: true
 set :deploy_to, "/var/www/#{fetch(:application)}"
 
 set :tmp_dir, "/home/pcyc/tmp"
-set :linked_files, %w{config/database.yml}       #需要做链接的文件，一般database.yml和部分配置文件
+set :linked_files, %w{config/database.yml config/application.yml}    #需要做链接的文件，一般database.yml和部分配置文件
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
 set :repo_url, "git@github.com:ShawnHill233/minishop.git"
