@@ -6,6 +6,7 @@ module Admin
     end
 
     def new
+      set_aliyun_upload
       @brand = Brand.new
     end
 
@@ -16,6 +17,7 @@ module Admin
     end
 
     def edit
+      set_aliyun_upload
     end
 
     def update

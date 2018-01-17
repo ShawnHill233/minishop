@@ -124,6 +124,10 @@ GEM
       railties (>= 3.2, < 5.2)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
+    gon (6.2.0)
+      actionpack (>= 3.0)
+      multi_json
+      request_store (>= 1.0)
     grape (1.0.1)
       activesupport
       builder
@@ -331,6 +335,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   draper
   font-awesome-rails
+  gon
   grape (= 1.0.1)
   grape-entity (= 0.6.0)
   grape-kaminari!

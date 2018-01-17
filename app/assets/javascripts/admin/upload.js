@@ -6,10 +6,10 @@ $(document).ready(function() {
         var client = new OSS.Wrapper({
             region: 'oss-cn-beijing',
             //云账号AccessKey有所有API访问权限，建议遵循阿里云安全最佳实践，创建并使用STS方式来进行API访问
-            accessKeyId: 'LTAI7SqWE0vgdMdy',
-            accessKeySecret: 'Qgil2R2h6ljmtb1oyEdfs0KQdOAI23',
+            accessKeyId: gon.aliyun_access_key_id,
+            accessKeySecret: gon.aliyun_access_key_secret,
             // stsToken: '<Your securityToken(STS)>',
-            bucket: 'pcyc-public'
+            bucket: 'pcyc'
         });
 
         body.on('change', '#upload', function (e) {
@@ -38,7 +38,7 @@ $(document).ready(function() {
         $('#image_url').val(filename);
     };
     var process_multi_image = function (filename) {
-        var image_url = "http://pcyc-public.oss-cn-beijing.aliyuncs.com/" + filename
+        var image_url = "http://pcyc.oss-cn-beijing.aliyuncs.com/" + filename
         if ($('div').hasClass('multiple_picture')) {
             $('.multiple_picture').find('.clear-fix').append(
                 '<li> <img src="' + image_url + '?x-oss-process=image/resize,w_150" alt="图片" > ' +

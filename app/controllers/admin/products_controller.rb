@@ -2,6 +2,7 @@ module Admin
   class ProductsController < AdminController
     before_action :set_product, only: [:show, :edit, :update, :destroy]
     def new
+      set_aliyun_upload
       @product = Product.new
       @product_property = @product.product_properties.build
       @properties = @product_property.build_property
@@ -28,11 +29,11 @@ module Admin
     end
 
     def edit
+      set_aliyun_upload
     end
 
     def update
       begin
-        puts "jfiojfoiwejfojweojfoewjfoj"
         puts params
         if set_images && set_brand && @product.update(product_params) && @product.save
           redirect_to admin_products_path
