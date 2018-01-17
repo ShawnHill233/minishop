@@ -33,7 +33,8 @@ set :puma_preload_app, true
 set :puma_worker_timeout, nil
 set :puma_init_active_record, true  # Change to false when not using ActiveRecord
 
-
+# ENV file , in server shared directory
+set :linked_files, fetch(:linked_files, []).push('.env.production')
 
 namespace :puma do
   desc 'Create Directories for Puma Pids and Socket'
