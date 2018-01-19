@@ -61,8 +61,12 @@ module Admin
       true
     end
     def set_brand
-      brand = Brand.find(params[:brand_id])
-      @product.brand = brand
+      if params[:brand_id].present?
+        brand = Brand.find(params[:brand_id])
+        @product.brand = brand
+      else
+        true
+      end
     end
 
     def set_product

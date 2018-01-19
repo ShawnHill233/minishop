@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 20180119015351) do
 
-  create_table "admin_users", force: :cascade do |t|
+  create_table "admin_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
     t.string "email"
     t.string "password_digest"
@@ -20,9 +20,9 @@ ActiveRecord::Schema.define(version: 20180119015351) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "assets", force: :cascade do |t|
+  create_table "assets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "viewable_type"
-    t.integer "viewable_id"
+    t.bigint "viewable_id"
     t.integer "attachment_width"
     t.integer "attachment_height"
     t.integer "attachment_file_size"
@@ -37,38 +37,38 @@ ActiveRecord::Schema.define(version: 20180119015351) do
     t.index ["viewable_type", "viewable_id"], name: "index_assets_on_viewable_type_and_viewable_id"
   end
 
-  create_table "attachments", force: :cascade do |t|
+  create_table "attachments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "url"
     t.string "attachable_type"
-    t.integer "attachable_id"
+    t.bigint "attachable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["attachable_type", "attachable_id"], name: "index_attachments_on_attachable_type_and_attachable_id"
   end
 
-  create_table "banners", force: :cascade do |t|
-    t.integer "product_id"
+  create_table "banners", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "product_id"
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["product_id"], name: "index_banners_on_product_id"
   end
 
-  create_table "brands", force: :cascade do |t|
+  create_table "brands", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "carts", force: :cascade do |t|
-    t.integer "user_id"
+  create_table "carts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_carts_on_user_id"
   end
 
-  create_table "categories", force: :cascade do |t|
+  create_table "categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
     t.integer "parent_id"
     t.integer "lft", null: false
@@ -83,28 +83,28 @@ ActiveRecord::Schema.define(version: 20180119015351) do
     t.index ["rgt"], name: "index_categories_on_rgt"
   end
 
-  create_table "line_items", force: :cascade do |t|
-    t.integer "variant_id"
-    t.integer "order_id"
+  create_table "line_items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "variant_id"
+    t.bigint "order_id"
     t.integer "quantity", default: 1, null: false
     t.decimal "price", precision: 8, scale: 2, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "cart_id"
+    t.bigint "cart_id"
     t.boolean "checked", default: true
     t.index ["cart_id"], name: "index_line_items_on_cart_id"
     t.index ["order_id"], name: "index_line_items_on_order_id"
     t.index ["variant_id"], name: "index_line_items_on_variant_id"
   end
 
-  create_table "orders", force: :cascade do |t|
+  create_table "orders", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "number", limit: 15
     t.decimal "item_total", precision: 8, scale: 2, default: "0.0", null: false
     t.decimal "total", precision: 8, scale: 2, default: "0.0", null: false
     t.string "state"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.datetime "completed_at"
-    t.integer "ship_address_id"
+    t.bigint "ship_address_id"
     t.decimal "payment_total", precision: 8, scale: 2, default: "0.0"
     t.string "payment_state"
     t.text "special_instructions"
@@ -114,35 +114,35 @@ ActiveRecord::Schema.define(version: 20180119015351) do
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
-  create_table "product_brands", force: :cascade do |t|
-    t.integer "product_id"
-    t.integer "brand_id"
+  create_table "product_brands", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "product_id"
+    t.bigint "brand_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["brand_id"], name: "index_product_brands_on_brand_id"
     t.index ["product_id"], name: "index_product_brands_on_product_id"
   end
 
-  create_table "product_categories", force: :cascade do |t|
-    t.integer "product_id"
-    t.integer "category_id"
+  create_table "product_categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "product_id"
+    t.bigint "category_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_product_categories_on_category_id"
     t.index ["product_id"], name: "index_product_categories_on_product_id"
   end
 
-  create_table "product_properties", force: :cascade do |t|
+  create_table "product_properties", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "value"
-    t.integer "product_id"
-    t.integer "property_id"
+    t.bigint "product_id"
+    t.bigint "property_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["product_id"], name: "index_product_properties_on_product_id"
     t.index ["property_id"], name: "index_product_properties_on_property_id"
   end
 
-  create_table "products", force: :cascade do |t|
+  create_table "products", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", default: "", null: false
     t.text "description"
     t.boolean "available"
@@ -150,47 +150,47 @@ ActiveRecord::Schema.define(version: 20180119015351) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "properties", force: :cascade do |t|
+  create_table "properties", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
     t.string "presentation"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "properties_prototypes", force: :cascade do |t|
-    t.integer "prototype_id"
-    t.integer "property_id"
+  create_table "properties_prototypes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "prototype_id"
+    t.bigint "property_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["property_id"], name: "index_properties_prototypes_on_property_id"
     t.index ["prototype_id"], name: "index_properties_prototypes_on_prototype_id"
   end
 
-  create_table "property_prototypes", force: :cascade do |t|
-    t.integer "property_id"
-    t.integer "prototype_id"
+  create_table "property_prototypes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "property_id"
+    t.bigint "prototype_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["property_id"], name: "index_property_prototypes_on_property_id"
     t.index ["prototype_id"], name: "index_property_prototypes_on_prototype_id"
   end
 
-  create_table "prototypes", force: :cascade do |t|
+  create_table "prototypes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "taxonomies", force: :cascade do |t|
+  create_table "taxonomies", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
     t.integer "position", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "taxons", force: :cascade do |t|
+  create_table "taxons", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
-    t.integer "taxonomy_id"
+    t.bigint "taxonomy_id"
     t.integer "parent_id"
     t.integer "lft", null: false
     t.integer "rgt", null: false
@@ -206,7 +206,7 @@ ActiveRecord::Schema.define(version: 20180119015351) do
     t.index ["taxonomy_id"], name: "index_taxons_on_taxonomy_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
     t.string "email"
     t.string "openid"
@@ -216,7 +216,7 @@ ActiveRecord::Schema.define(version: 20180119015351) do
     t.string "mobile"
   end
 
-  create_table "variants", force: :cascade do |t|
+  create_table "variants", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "sku", default: "", null: false
     t.decimal "price", precision: 8, scale: 2
     t.decimal "weight", precision: 8, scale: 2
@@ -224,7 +224,7 @@ ActiveRecord::Schema.define(version: 20180119015351) do
     t.decimal "width", precision: 8, scale: 2
     t.decimal "depth", precision: 8, scale: 2
     t.boolean "is_master", default: false
-    t.integer "product_id"
+    t.bigint "product_id"
     t.integer "position"
     t.datetime "discontinue_on"
     t.datetime "created_at", null: false
@@ -232,4 +232,18 @@ ActiveRecord::Schema.define(version: 20180119015351) do
     t.index ["product_id"], name: "index_variants_on_product_id"
   end
 
+  add_foreign_key "banners", "products"
+  add_foreign_key "carts", "users"
+  add_foreign_key "line_items", "carts"
+  add_foreign_key "product_brands", "brands"
+  add_foreign_key "product_brands", "products"
+  add_foreign_key "product_categories", "categories"
+  add_foreign_key "product_categories", "products"
+  add_foreign_key "product_properties", "products"
+  add_foreign_key "product_properties", "properties"
+  add_foreign_key "properties_prototypes", "properties"
+  add_foreign_key "properties_prototypes", "prototypes"
+  add_foreign_key "property_prototypes", "properties"
+  add_foreign_key "property_prototypes", "prototypes"
+  add_foreign_key "taxons", "taxonomies"
 end

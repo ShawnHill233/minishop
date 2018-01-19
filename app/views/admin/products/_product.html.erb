@@ -1,7 +1,7 @@
 <tr>
   <td><%= product.id %></td>
   <td><%= product.name %></td>
-  <td><%= product.brand.name %></td>
+  <td><%= product.brand.try(:name) %></td>
   <td><%= product.price %></td>
   <td></td>
   <td><%= product.categories.map(&:name).join(",")%></td>

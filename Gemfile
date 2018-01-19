@@ -49,6 +49,7 @@ gem "cocoon"
 gem 'nokogiri'
 gem 'draper'
 gem 'gon'
+gem 'mysql2'
 
 gem 'dotenv-rails', :require => 'dotenv/rails-now'
 
