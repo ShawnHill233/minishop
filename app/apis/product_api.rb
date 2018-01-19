@@ -15,6 +15,7 @@ class ProductAPI < Grape::API
       optional :category_id, type: Integer, desc: '分类id'
       optional :category_name, type: String, desc: '分类名称'
       optional :brand_id, type: Integer, desc: '品牌id'
+      optional :keyword, type: String, desc: '搜索词汇'
       optional :page, type: Integer, desc: '查询的页数,默认是1'
       optional :per_page, type: Integer, desc: '每页显示的数量,默认是25'
     end
@@ -23,6 +24,7 @@ class ProductAPI < Grape::API
       products = products.joins(:categories).where(categories: {id: params[:category_id]}) if params[:category_id].present?
       products = products.joins(:categories).where(categories: {name: params[:category_name]}) if params[:category_name].present?
       products = products.joins(:brand).where(brands: {id: params[:brand_id]}) if params[:brand_id].present?
+      products = products.where('name LIKE ?', "%#{params[:keyword]}%") if params[:keyword].present?
       present paginate(products), with: Entities::Product
     end
 
