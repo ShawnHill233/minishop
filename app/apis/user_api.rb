@@ -17,5 +17,19 @@ class UserAPI < Grape::API
       end
     end
 
+    desc '获取个人信息'
+    get :info do
+      present :name => current_user.name, :mobile => current_user.mobile
+    end
+    desc '修改个人信息'
+    params do
+      requires :name, type: String, desc: '姓名'
+      requires :mobile, type: String, desc: '手机号'
+    end
+    post :info do
+      current_user.update(name: params[:name], mobile: params[:mobile])
+      success_response
+    end
+
   end
 end

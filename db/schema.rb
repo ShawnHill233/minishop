@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180111023821) do
+ActiveRecord::Schema.define(version: 20180119015351) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string "name"
@@ -212,6 +212,8 @@ ActiveRecord::Schema.define(version: 20180111023821) do
     t.string "openid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "nickname"
+    t.string "mobile"
   end
 
   create_table "variants", force: :cascade do |t|
