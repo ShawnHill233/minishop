@@ -4,8 +4,8 @@ module Admin
     def new
       set_aliyun_upload
       @product = Product.new
-      @product_property = @product.product_properties.build
-      @properties = @product_property.build_property
+      # @product_property = @product.product_properties.build
+      # @properties = @product_property.build_property
     end
 
     def create

@@ -1,11 +1,11 @@
 <%= form_for [:admin, @product] do |f| %>
   <div class="form-group">
     <label>所属分类</label>
-    <%= f.select :category_ids, nested_set_options(Category) {|i| "#{'-' * i.level} #{i.name}" } %>
+    <%= f.select :category_ids, nested_set_options(Category) {|i| "#{'-' * i.level} #{i.name}" }, {:include_blank => '无'} %>
   </div>
   <div class="form-group">
     <label>所属品牌</label>
-    <%= select_tag :brand_id, options_from_collection_for_select(Brand.all, :id, :name, @product.brand.try(:id)) %>
+    <%= select_tag :brand_id, options_from_collection_for_select(Brand.all, :id, :name, @product.brand.try(:id)), {:include_blank => '无'} %>
   </div>
   <div class="form-group">
     <label>商品名称</label>
