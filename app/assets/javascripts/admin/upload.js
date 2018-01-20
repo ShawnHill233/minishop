@@ -9,7 +9,8 @@ $(document).ready(function() {
             accessKeyId: gon.aliyun_access_key_id,
             accessKeySecret: gon.aliyun_access_key_secret,
             // stsToken: '<Your securityToken(STS)>',
-            bucket: 'pcyc'
+            bucket: 'pcyc',
+            secure: true
         });
 
         body.on('change', '#upload', function (e) {
