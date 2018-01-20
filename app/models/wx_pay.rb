@@ -14,7 +14,7 @@ class WxPay
       params = {
           appid: Settings.wx_appid,
           attach: '平昌养车',
-          body: '购买商品',
+          body: order.line_items.map { |item| item.product.name }.join(","),
           mch_id: Settings.merchant_id,
           nonce_str: nonce_str,
           notify_url: Settings.pay_notify_url,
