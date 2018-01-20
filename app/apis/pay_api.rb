@@ -1,7 +1,7 @@
 class PayAPI < Grape::API
-  content_type :xml, 'application/xml'
+  content_type :xml, 'text/xml'
   formatter :xml, Proc.new { |object|
-    "<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>"
+    "#{object.to_xml(:skip_instruct => true, root: 'xml', :dasherize => false)}"
   }
   format :xml
 
