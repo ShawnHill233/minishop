@@ -1,6 +1,5 @@
 module Admin
   class SessionsController < Devise::SessionsController
-    layout :false
 
     # def after_sign_in_path_for(admin_user)
     #   from, url = params[:from], params[:url]
