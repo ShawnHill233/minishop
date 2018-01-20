@@ -50,6 +50,7 @@ gem 'nokogiri'
 gem 'draper'
 gem 'gon'
 gem 'mysql2'
+gem 'devise'
 
 gem 'dotenv-rails', :require => 'dotenv/rails-now'
 

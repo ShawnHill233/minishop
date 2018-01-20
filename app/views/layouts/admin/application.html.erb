@@ -1,29 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Minishop</title>
-    <%= csrf_meta_tags %>
+<head>
+  <title>Minishop</title>
+  <%= csrf_meta_tags %>
 
-    <%= Gon::Base.render_data  %>
-    <%= stylesheet_link_tag    'admin/application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'admin/application', 'data-turbolinks-track': 'reload' %>
-  </head>
+  <%= Gon::Base.render_data  %>
+  <%= stylesheet_link_tag    'admin/application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'admin/application', 'data-turbolinks-track': 'reload' %>
+</head>
 
-  <body>
-  <!-- Navigation -->
-  <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-    <%= render 'admin/shared/header' %>
-    <%= render 'admin/shared/sidebar' %>
-  </nav>
-  <div id="wrapper">
-    <% flash.each do |message_type, message| %>
-      <div class="alert alert-<%= message_type %>"><%= message %></div>
-    <% end %>
-    <%= yield %>
-    <%#= render 'admin/shared/footer' %>
-    <%= debug(params) if Rails.env.development? %>
-  </div>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+  <%= render 'admin/shared/header' %>
+  <%= render 'admin/shared/sidebar' %>
+</nav>
 
 
-  </body>
+<div id="wrapper">
+  <% flash.each do |message_type, message| %>
+    <div class="alert alert-<%= message_type %>"  style="width: 60%; margin:auto"><%= message %></div>
+  <% end %>
+
+  <%= yield %>
+  <%#= render 'admin/shared/footer' %>
+  <%= debug(params) if Rails.env.development? %>
+</div>
+
+
+</body>
 </html>

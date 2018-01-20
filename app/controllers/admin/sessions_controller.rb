@@ -1,19 +1,23 @@
 module Admin
-  class SessionsController < AdminController
-    def new
-    end
+  class SessionsController < Devise::SessionsController
+    layout :false
 
-    def create
-      admin_user = Admin::User.find_by(email: params[:session][:email].downcase)
-      if admin_user && admin_user.authenticate(params[:session][:password])
-        # 登入用户，然后重定向到用户的资料页面
-        flash.now[:success] = '登录成功'
-        render 'new'
-      else
-        flash.now[:danger] = '邮箱或密码错误'
-        render 'new'
-      end
-    end
+    # def after_sign_in_path_for(admin_user)
+    #   from, url = params[:from], params[:url]
+    #   if from.present? && url.present?
+    #     internal_system = InternalSystem.where(code: from).first
+    #     if internal_system.present?
+    #       param = "st=#{internal_system.generate_sso_token_for_admin(admin_user, 3.minutes)}"
+    #       append = url.include?('?') ? "&#{param}" : "?#{param}"
+    #       @redirects_to = "#{url}#{append}"
+    #     end
+    #   end
+    #   @redirects_to || admin_root_path
+    # end
+    #
+    # def after_sign_out_path_for(resource)
+    #   new_admin_user_session_path
+    # end
   end
 
 end

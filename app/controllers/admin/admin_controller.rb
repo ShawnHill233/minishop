@@ -1,5 +1,6 @@
 class Admin::AdminController < ApplicationController
   layout 'admin/application'
+  before_action :authenticate_admin_user!
 
   private
   def set_aliyun_upload
