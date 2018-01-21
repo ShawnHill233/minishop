@@ -28,7 +28,7 @@ class OrderAPI < Grape::API
 
       desc '取消订单'
       post :cancel do
-        order = current_user.orders.find_by(number: params[:number])
+        order = current_user.orders.find_by(number: params[:number]).decorate
         order.cancel!
         status 200
         present order, with: Entities::Order

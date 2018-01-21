@@ -17,7 +17,7 @@ class OrderDecorator < ApplicationDecorator
           when 'paid'
             '待服务'
           when'delay'
-            '待服务'
+            '待服务，到店支付'
           else
             '待付款'
         end

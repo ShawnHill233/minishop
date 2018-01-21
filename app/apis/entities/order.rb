@@ -5,14 +5,16 @@ module Entities
     expose :state
     expose :line_items, using: Entities::LineItem
     expose :payment_total
+    expose :payment_state
     expose :created_at do |order|
       order.created_at.strftime("%Y-%m-%d %H:%M")
     end
+
     expose :may_cancel do |order|
       order.may_cancel?
     end
     expose :may_payment do |order|
-      order.payment? && order.payment_state != 'delay'
+      order.payment?
     end
   end
 end
