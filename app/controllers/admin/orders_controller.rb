@@ -11,7 +11,7 @@ module Admin
 
     def completed
       @order.complete!
-      flash[:success] = '订单已完成'
+      flash[:success] = '已完成订单'
       redirect_to admin_order_path(@order)
     end
 

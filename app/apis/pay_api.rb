@@ -31,7 +31,6 @@ class PayAPI < Grape::API
       if sign == notify_sign && (order.payment_total*100).to_i == total_fee.to_i
         if order.may_complete_pay?
           order.complete_pay!
-          order.complete!
         end
 
         status 200
