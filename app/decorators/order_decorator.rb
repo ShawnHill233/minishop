@@ -14,7 +14,9 @@ class OrderDecorator < ApplicationDecorator
     case object.state
       when 'payment'
         case object.payment_state
-          when 'paid' || 'delay'
+          when 'paid'
+            '待服务'
+          when'delay'
             '待服务'
           else
             '待付款'

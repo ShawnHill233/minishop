@@ -12,7 +12,7 @@ module Entities
       order.may_cancel?
     end
     expose :may_payment do |order|
-      order.payment?
+      order.payment? && order.payment_state != 'delay'
     end
   end
 end

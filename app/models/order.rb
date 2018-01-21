@@ -67,7 +67,7 @@ class Order < ApplicationRecord
   end
 
   def if_paid?
-    payment_state == 'paid'
+    payment_state == 'paid' || payment_state == 'delay'
   end
 
   class << self
