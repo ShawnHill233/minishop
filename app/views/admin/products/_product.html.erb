@@ -3,7 +3,7 @@
   <td><%= product.name %></td>
   <td><%= product.brand.try(:name) %></td>
   <td><%= product.price %></td>
-  <td></td>
+  <td><%= product.available == true ? '是' : '否' %></td>
   <td><%= product.categories.map(&:name).join(",")%></td>
   <td></td>
   <td>

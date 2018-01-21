@@ -20,7 +20,7 @@ class ProductAPI < Grape::API
       optional :per_page, type: Integer, desc: '每页显示的数量,默认是25'
     end
     get do
-      products = Product.all
+      products = Product.available
       products = products.joins(:categories).where(categories: {id: params[:category_id]}) if params[:category_id].present?
       products = products.joins(:categories).where(categories: {name: params[:category_name]}) if params[:category_name].present?
       products = products.joins(:brand).where(brands: {id: params[:brand_id]}) if params[:brand_id].present?
