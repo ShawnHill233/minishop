@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     end
     resources :banners
     resources :prototypes
+    resources :feedbacks
   end
 
   mount API, at: '/api'
