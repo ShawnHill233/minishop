@@ -1,6 +1,6 @@
 module Admin
   class PrototypesController < AdminController
-    before_action :set_prototype, only: [:edit, :update, :destroy]
+    before_action :set_prototype, only: [:edit, :update, :destroy, :get_property_names]
     def index
       @prototypes = Prototype.all
     end
@@ -27,6 +27,11 @@ module Admin
 
     def destroy
       @prototype.destroy
+    end
+
+    def get_property_names
+      @property_names = @prototype.property_prototypes.map { |property_prototype| property_prototype.property.try(:name)}
+      render :json => @property_names
     end
 
     private

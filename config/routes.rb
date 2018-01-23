@@ -13,7 +13,11 @@ Rails.application.routes.draw do
       end
     end
     resources :banners
-    resources :prototypes
+    resources :prototypes do
+      member do
+        get :get_property_names
+      end
+    end
     resources :feedbacks
   end
 
