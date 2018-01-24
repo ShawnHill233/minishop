@@ -34,7 +34,7 @@ class Product < ApplicationRecord
 
   scope :available, -> { where(available: true) }
 
-  after_create :add_associations_from_prototype
+  # after_create :add_associations_from_prototype
   after_save :save_master
 
   def find_or_build_master
@@ -55,12 +55,12 @@ class Product < ApplicationRecord
   end
 
   private
-  def add_associations_from_prototype
-    if prototype_id && prototype = Prototype.find_by(id: prototype_id)
-      prototype.properties.each do |property|
-        product_properties.create(property: property)
-      end
-    end
-  end
+  # def add_associations_from_prototype
+  #   if prototype_id && prototype = Prototype.find_by(id: prototype_id)
+  #     prototype.properties.each do |property|
+  #       product_properties.create(property: property)
+  #     end
+  #   end
+  # end
 
 end
