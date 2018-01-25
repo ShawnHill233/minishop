@@ -1,0 +1,1 @@
+$redis = ConnectionPool.new(size: Settings.redis.pool) { Redis.new(url: Settings.redis.url) }

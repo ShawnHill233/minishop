@@ -19,6 +19,12 @@ Rails.application.routes.draw do
       end
     end
     resources :feedbacks
+
+    require 'sidekiq/web'
+    require 'sidekiq-status/web'
+    authenticate :admin_user do
+      mount Sidekiq::Web => '/sidekiq'
+    end
   end
 
   mount API, at: '/api'

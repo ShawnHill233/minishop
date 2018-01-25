@@ -55,7 +55,7 @@ class Order < ApplicationRecord
     end
 
     event :complete do
-      transitions from: :payment, to: :completed, :guard => :if_paid? do
+      transitions from: :payment, to: :completed, :guard => :paid? do
 
       end
     end
@@ -66,7 +66,7 @@ class Order < ApplicationRecord
     end
   end
 
-  def if_paid?
+  def paid?
     payment_state == 'paid' || payment_state == 'delay'
   end
 
@@ -76,8 +76,11 @@ class Order < ApplicationRecord
       new_order.line_items = line_items
       new_order.payment_total = line_items.inject(0){ |sum, item| sum + item.price * item.quantity }
       new_order.save!
+      # 计时取消
+      OrderJob.perform_in(60.minutes, new_order.id)
       return new_order
     end
+
 
     def mp_pay_params(order_number)
 

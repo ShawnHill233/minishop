@@ -52,6 +52,14 @@ gem 'gon'
 gem 'mysql2'
 gem 'devise'
 
+# sidekiq and dependence
+gem 'sidekiq', '4.1.2'
+gem 'sidekiq-status'
+gem 'redis', '~> 3.2.1'
+gem 'redis-namespace'
+gem 'sinatra', :require => nil
+# sidekiq end
+
 gem 'dotenv-rails', :require => 'dotenv/rails-now'
 
 group :development, :test do
