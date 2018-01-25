@@ -46,6 +46,7 @@ module Admin
 
     def destroy
       @product.destroy
+      Cart.joins(:line_items).where(line_items: { product: @product }).destroy_all
       redirect_to admin_products_path
     end
 

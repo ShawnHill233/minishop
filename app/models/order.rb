@@ -1,7 +1,7 @@
 class Order < ApplicationRecord
 
   belongs_to :user
-  has_many :line_items, -> { order(:created_at) }, inverse_of: :order, dependent: :destroy
+  has_many :line_items, -> { order(:created_at) }, dependent: :destroy, as: :line_itemable
   accepts_nested_attributes_for :line_items
 
   STATE = %w(pending payment completed canceled)
@@ -76,7 +76,6 @@ class Order < ApplicationRecord
       new_order.line_items = line_items
       new_order.payment_total = line_items.inject(0){ |sum, item| sum + item.price * item.quantity }
       new_order.save!
-      user.cart.line_items.delete(line_items)
       return new_order
     end
 

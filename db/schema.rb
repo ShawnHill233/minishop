@@ -101,16 +101,15 @@ ActiveRecord::Schema.define(version: 20180123090536) do
   end
 
   create_table "line_items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "line_itemable_type"
+    t.bigint "line_itemable_id"
     t.bigint "variant_id"
-    t.bigint "order_id"
     t.integer "quantity", default: 1, null: false
     t.decimal "price", precision: 8, scale: 2, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "cart_id"
     t.boolean "checked", default: true
-    t.index ["cart_id"], name: "index_line_items_on_cart_id"
-    t.index ["order_id"], name: "index_line_items_on_order_id"
+    t.index ["line_itemable_type", "line_itemable_id"], name: "index_line_items_on_line_itemable_type_and_line_itemable_id"
     t.index ["variant_id"], name: "index_line_items_on_variant_id"
   end
 
@@ -252,7 +251,6 @@ ActiveRecord::Schema.define(version: 20180123090536) do
 
   add_foreign_key "banners", "products"
   add_foreign_key "carts", "users"
-  add_foreign_key "line_items", "carts"
   add_foreign_key "product_brands", "brands"
   add_foreign_key "product_brands", "products"
   add_foreign_key "product_categories", "categories"

@@ -1,7 +1,6 @@
 class LineItem < ApplicationRecord
 
-  belongs_to :cart, optional: true
-  belongs_to :order, optional: true
+  belongs_to :line_itemable, polymorphic: true
   belongs_to :variant
 
   has_one :product, through: :variant
@@ -14,6 +13,20 @@ class LineItem < ApplicationRecord
   def copy_price
     if variant
       self.price = variant.price
+    end
+  end
+
+  def newest_price
+    variant.price
+  end
+
+  class << self
+
+    def update_price(line_items)
+      line_items.each do |line_item|
+        line_item.price = line_item.newest_price
+      end
+      line_items
     end
   end
 
