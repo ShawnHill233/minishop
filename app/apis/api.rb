@@ -34,4 +34,5 @@ class API < Grape::API
   mount API::OrderAPI
   mount API::PayAPI
   mount API::FeedbackAPI
+  mount API::CheckoutAPI
 end

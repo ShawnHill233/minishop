@@ -10,9 +10,22 @@ class OrderAPI < Grape::API
     end
 
     desc '创建订单, 去付款'
-
     post do
       order = current_user.cart.submit!
+      order.start_pay!
+      status 200
+      present order, with: Entities::Order
+    end
+
+    desc '立即购买方式创建订单'
+    params do
+      requires :variant_id, type: Integer, desc: '版本ID'
+      requires :quantity, type: Integer, desc: '数量'
+    end
+    post :buy_now do
+      line_item = LineItem.new(variant_id: params[:variant_id], quantity: params[:quantity])
+      line_item.copy_price
+      order = Order.create_order(current_user, [line_item])
       order.start_pay!
       status 200
       present order, with: Entities::Order

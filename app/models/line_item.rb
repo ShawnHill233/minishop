@@ -1,6 +1,6 @@
 class LineItem < ApplicationRecord
 
-  belongs_to :line_itemable, polymorphic: true
+  belongs_to :line_itemable, polymorphic: true, optional: true
   belongs_to :variant
 
   has_one :product, through: :variant
