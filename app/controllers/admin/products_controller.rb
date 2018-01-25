@@ -45,8 +45,10 @@ module Admin
     end
 
     def destroy
-      @product.destroy
-      Cart.joins(:line_items).where(line_items: { product: @product }).destroy_all
+      Product.transaction do
+        LineItem.where(line_itemable_type: 'Cart', variant_id: @product.variants_including_master.map(&:id)).destroy_all
+        @product.destroy
+      end
       redirect_to admin_products_path
     end
 

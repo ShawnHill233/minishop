@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180123090536) do
+ActiveRecord::Schema.define(version: 20180122080753) do
 
   create_table "admin_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "email", default: "", null: false
@@ -106,9 +106,9 @@ ActiveRecord::Schema.define(version: 20180123090536) do
     t.bigint "variant_id"
     t.integer "quantity", default: 1, null: false
     t.decimal "price", precision: 8, scale: 2, null: false
+    t.boolean "checked", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "checked", default: true
     t.index ["line_itemable_type", "line_itemable_id"], name: "index_line_items_on_line_itemable_type_and_line_itemable_id"
     t.index ["variant_id"], name: "index_line_items_on_variant_id"
   end
@@ -162,9 +162,9 @@ ActiveRecord::Schema.define(version: 20180123090536) do
     t.string "name", default: "", null: false
     t.text "description"
     t.boolean "available", default: true
+    t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "position"
   end
 
   create_table "properties", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -225,12 +225,12 @@ ActiveRecord::Schema.define(version: 20180123090536) do
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
+    t.string "nickname"
     t.string "email"
+    t.string "mobile"
     t.string "openid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "nickname"
-    t.string "mobile"
   end
 
   create_table "variants", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
