@@ -5,6 +5,7 @@ class CreateLineItems < ActiveRecord::Migration[5.1]
       t.references :variant
       t.integer    :quantity,                               null: false, default: 1
       t.decimal    :price,    precision: 8, scale: 2, null: false
+      t.boolean    :checked,  default: true
 
       t.timestamps
     end
