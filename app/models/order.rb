@@ -2,6 +2,8 @@ class Order < ApplicationRecord
 
   belongs_to :user
   has_many :line_items, -> { order(:created_at) }, dependent: :destroy, as: :line_itemable
+  validates :line_items, presence: true
+
   accepts_nested_attributes_for :line_items
 
   STATE = %w(pending payment completed canceled)
