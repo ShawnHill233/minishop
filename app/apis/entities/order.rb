@@ -14,7 +14,7 @@ module Entities
       order.may_cancel?
     end
     expose :may_payment do |order|
-      order.payment?
+      order.pending? || order.payment?
     end
   end
 end
