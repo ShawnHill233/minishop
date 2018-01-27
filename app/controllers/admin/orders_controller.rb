@@ -1,6 +1,6 @@
 module Admin
   class OrdersController < AdminController
-    before_action :set_order, only: [:show, :completed]
+    before_action :set_order, only: [:show, :complete]
     def index
       @orders = Order.all.order(created_at: :desc).decorate
     end
@@ -9,7 +9,7 @@ module Admin
       @order = @order.decorate
     end
 
-    def completed
+    def complete
       @order.complete!
       flash[:success] = '已完成订单'
       redirect_to admin_order_path(@order)

@@ -63,7 +63,7 @@
             </table>
 
             <% if @order.may_complete? %>
-              <a href="<%= complete_admin_order_path(@order) %>" style="float: right; "><button type="button" class="btn btn-success btn-lg">完成服务</button></a>
+              <a href="<%= complete_admin_order_path(@order) %>" style="float: right; " data-method="post"><button type="button" class="btn btn-success btn-lg">完成服务</button></a>
             <% end %>
 
           </div>
