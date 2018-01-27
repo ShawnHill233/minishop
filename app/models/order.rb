@@ -6,7 +6,7 @@ class Order < ApplicationRecord
 
   accepts_nested_attributes_for :line_items
 
-  STATE = %w(pending payment completed canceled)
+  STATE = %w(pending payment deliver completed canceled)
   PAYMENT_STATES = %w(failed paid delay)
   validates_inclusion_of :state, :in => STATE
 
