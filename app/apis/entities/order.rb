@@ -6,9 +6,7 @@ module Entities
     expose :line_items, using: Entities::LineItem
     expose :payment_total
     expose :payment_state
-    expose :created_at do |order|
-      order.created_at.strftime("%Y-%m-%d %H:%M")
-    end
+    expose :created_at
 
     expose :may_cancel do |order|
       order.may_cancel?
