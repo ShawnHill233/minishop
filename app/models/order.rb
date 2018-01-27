@@ -30,7 +30,7 @@ class Order < ApplicationRecord
     end
 
     event :complete_pay do
-      transitions from: :payment, to: :payment do
+      transitions from: :payment, to: :deliver do
         after do
           self.payment_state = 'paid'
           self.save
@@ -48,7 +48,7 @@ class Order < ApplicationRecord
     end
 
     event :delay_pay do
-      transitions from: [:payment], to: :payment do
+      transitions from: [:payment], to: :deliver do
         after do
           self.payment_state = 'delay'
           self.save
@@ -57,7 +57,7 @@ class Order < ApplicationRecord
     end
 
     event :complete do
-      transitions from: :payment, to: :completed, :guard => :paid? do
+      transitions from: [:payment, :deliver], to: :completed, :guard => :paid? do
 
       end
     end

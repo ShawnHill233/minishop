@@ -21,6 +21,8 @@ class OrderDecorator < ApplicationDecorator
           else
             '待付款'
         end
+      when 'deliver'
+        '待服务'
       when 'completed'
         '交易成功'
       when 'canceled'
