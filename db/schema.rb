@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180207053726) do
+ActiveRecord::Schema.define(version: 20180314091755) do
 
   create_table "admin_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "email", default: "", null: false
@@ -113,6 +113,35 @@ ActiveRecord::Schema.define(version: 20180207053726) do
     t.index ["variant_id"], name: "index_line_items_on_variant_id"
   end
 
+  create_table "option_types", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+    t.string "presentation"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_option_types_on_name"
+    t.index ["position"], name: "index_option_types_on_position"
+  end
+
+  create_table "option_value_variants", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "option_value_id"
+    t.bigint "variant_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["option_value_id"], name: "index_option_value_variants_on_option_value_id"
+    t.index ["variant_id"], name: "index_option_value_variants_on_variant_id"
+  end
+
+  create_table "option_values", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "position"
+    t.string "name"
+    t.string "presentation"
+    t.bigint "option_type_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["option_type_id"], name: "index_option_values_on_option_type_id"
+  end
+
   create_table "orders", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "number", limit: 15
     t.decimal "item_total", precision: 8, scale: 2, default: "0.0", null: false
@@ -146,6 +175,16 @@ ActiveRecord::Schema.define(version: 20180207053726) do
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_product_categories_on_category_id"
     t.index ["product_id"], name: "index_product_categories_on_product_id"
+  end
+
+  create_table "product_option_types", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "position"
+    t.bigint "product_id"
+    t.bigint "option_type_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["option_type_id"], name: "index_product_option_types_on_option_type_id"
+    t.index ["product_id"], name: "index_product_option_types_on_product_id"
   end
 
   create_table "product_properties", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -252,10 +291,15 @@ ActiveRecord::Schema.define(version: 20180207053726) do
 
   add_foreign_key "banners", "products"
   add_foreign_key "carts", "users"
+  add_foreign_key "option_value_variants", "option_values"
+  add_foreign_key "option_value_variants", "variants"
+  add_foreign_key "option_values", "option_types"
   add_foreign_key "product_brands", "brands"
   add_foreign_key "product_brands", "products"
   add_foreign_key "product_categories", "categories"
   add_foreign_key "product_categories", "products"
+  add_foreign_key "product_option_types", "option_types"
+  add_foreign_key "product_option_types", "products"
   add_foreign_key "product_properties", "products"
   add_foreign_key "product_properties", "properties"
   add_foreign_key "properties_prototypes", "properties"

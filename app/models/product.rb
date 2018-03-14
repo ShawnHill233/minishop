@@ -23,6 +23,9 @@ class Product < ApplicationRecord
     delegate method_name, :"#{method_name}=", to: :find_or_build_master
   end
 
+  has_many :product_option_types, dependent: :destroy, inverse_of: :product
+  has_many :option_types, through: :product_option_types
+
   has_many :product_properties, dependent: :destroy, inverse_of: :product
   has_many :properties, through: :product_properties
   accepts_nested_attributes_for :product_properties, :allow_destroy => true
