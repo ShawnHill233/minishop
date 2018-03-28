@@ -1,5 +1,4 @@
 class OptionType < ApplicationRecord
-  acts_as_list
 
   with_options dependent: :destroy, inverse_of: :option_type do
     has_many :option_values, -> { order(:position) }
