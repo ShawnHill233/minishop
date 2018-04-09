@@ -25,14 +25,14 @@ class ProductAPI < Grape::API
       products = products.joins(:categories).where(categories: {name: params[:category_name]}) if params[:category_name].present?
       products = products.joins(:brand).where(brands: {id: params[:brand_id]}) if params[:brand_id].present?
       products = products.where('name LIKE ?', "%#{params[:keyword]}%") if params[:keyword].present?
-      present paginate(products), with: Entities::Product
+      present paginate(products), with: Entities::Product, image_style: 'product'
     end
 
     route_param :id do
       desc '获取商品详情'
       get do
         product = Product.find(params[:id])
-        present product, with: Entities::Product
+        present product, with: Entities::Product, image_style: 'large'
       end
     end
   end
