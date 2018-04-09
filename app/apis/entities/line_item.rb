@@ -11,7 +11,7 @@ module Entities
       line_item.product.name
     end
     expose :image do |line_item|
-      line_item.product.images[0].try(:full_url)
+      line_item.product.images[0].try(:full_url, 'small')
     end
   end
 end
