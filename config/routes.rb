@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   root to: 'admin/orders#index'
   namespace :admin do
 
-    resources :products
+    resources :products do
+      resources :product_properties
+    end
     resources :categories
     resources :brands
     resources :orders do

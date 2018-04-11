@@ -1,59 +1,50 @@
 <%= form_for [:admin, @product] do |f| %>
+
   <div class="form-group">
-    <label>所属分类</label>
-    <%= f.select :category_ids, nested_set_options(Category) {|i| "#{'-' * i.level} #{i.name}" }, {:include_blank => '无'} %>
-  </div>
-  <div class="form-group">
-    <label>所属品牌</label>
-    <%= select_tag :brand_id, options_from_collection_for_select(Brand.all, :id, :name, @product.brand.try(:id)), {:include_blank => '无'} %>
-  </div>
-  <div class="form-group">
-    <label>商品名称</label>
+    <label>商品名称*</label>
     <%= f.text_field :name, class: 'form-control' %>
   </div>
+
   <div class="form-group">
-    <label>商品简介</label>
-    <%= f.text_area :description, class:"form-control", rows: "3" %>
-  </div>
-  <div class="form-group">
-    <label>默认价格</label>
+    <label>默认价格*</label>
     <%= f.text_field :price, class: 'form-control' %>
   </div>
-  <div class="form-group">
-    <label>商品图片</label>
-    <input type="file" id="upload" multiple />
-  </div>
 
-  <div class="multiple_picture" name_value="images[]">
-    <ul id="max-picture-number" class="edit_product_pictures clear-fix <%= 'data' unless @product.new_record? %>" max-picture-number="6">
-      <% @product.images.each do |image| %>
-        <li><input type="hidden" name="images[]" value="<%= image.url %>"/><img src="<%= image.full_url + '?x-oss-process=image/resize,w_150' %>" alt="图片说明"/><a class="hit_ajax delete" >删除</a></li>
-      <% end %>
-    </ul>
-  </div>
-
-  <hr />
   <% if @product.new_record? %>
     <div class="form-group">
       <label>原型</label>
       <%= f.select :prototype_id, content_tag(:option,'无',:value=>"") + options_from_collection_for_select(Prototype.all, :id, :name, @product.prototype_id) %>
     </div>
   <% end %>
-  <div class="form-group">
-    <%= f.fields_for :product_properties do |product_property_form| %>
-      <%= render 'product_property_fields', :f => product_property_form %>
-    <% end %>
-    <%= link_to_add_association '添加属性', f, :product_properties %>
-  </div>
 
-  <div class="form-group">
-    <label>型号选项</label>
-    <%= f.collection_select :option_type_ids, OptionType.all, :id, :name, {include_blank: true}, {:multiple => true, :class=>""} %>
-  </div>
+  <% unless @product.new_record? %>
+    <div class="form-group">
+      <label>所属分类</label>
+      <%= f.select :category_ids, nested_set_options(Category) {|i| "#{'-' * i.level} #{i.name}" }, {:include_blank => '无'} %>
+    </div>
+    <div class="form-group">
+      <label>所属品牌</label>
+      <%= select_tag :brand_id, options_from_collection_for_select(Brand.all, :id, :name, @product.brand.try(:id)), {:include_blank => '无'} %>
+    </div>
 
-  <!--<div class="form-group">-->
-    <!--<label>型号值</label>-->
-  <!--</div>-->
+    <div class="form-group">
+      <label>商品简介</label>
+      <%= f.text_area :description, class:"form-control", rows: "3" %>
+    </div>
+
+    <div class="form-group">
+      <label>商品图片</label>
+      <input type="file" id="upload" multiple />
+    </div>
+
+    <div class="multiple_picture" name_value="images[]">
+      <ul id="max-picture-number" class="edit_product_pictures clear-fix <%= 'data' unless @product.new_record? %>" max-picture-number="6">
+        <% @product.images.each do |image| %>
+          <li><input type="hidden" name="images[]" value="<%= image.url %>"/><img src="<%= image.full_url + '?x-oss-process=image/resize,w_150' %>" alt="图片说明"/><a class="hit_ajax delete" >删除</a></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
   <div class="form-group">
     <label>上架</label>

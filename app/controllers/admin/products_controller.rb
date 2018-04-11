@@ -55,8 +55,8 @@ module Admin
 
     private
     def set_images
-      @product.images.delete_all unless @product.new_record?
       if params[:images].present?
+        @product.images.delete_all unless @product.new_record?
         params[:images].each do |image_url|
           @product.images << Image.create(url: image_url)
         end

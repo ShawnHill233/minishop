@@ -1,0 +1,12 @@
+<%= form_for [:admin, @product] do |f| %>
+
+  <div class="form-group">
+    <%= f.fields_for :product_properties do |product_property_form| %>
+      <%= render 'product_property_fields', :f => product_property_form %>
+    <% end %>
+    <%= link_to_add_association '添加属性', f, :product_properties %>
+  </div>
+
+  <button type="submit" class="btn btn-default">确定保存</button>
+  <button type="reset" class="btn btn-default">取消</button>
+<% end %>
