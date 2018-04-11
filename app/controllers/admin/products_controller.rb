@@ -22,6 +22,9 @@ module Admin
 
     def index
       @products = Product.order(created_at: :desc)
+                      .includes(:brand)
+                      .includes(:categories)
+                      .includes(:master)
     end
 
     def show

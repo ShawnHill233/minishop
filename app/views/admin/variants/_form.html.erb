@@ -1,0 +1,12 @@
+<%= form_for [:admin, @product] do |f| %>
+  <% @product.option_types.each do |option_type| %>
+    <label><%= option_type.name %></label>
+    <%= f.select :option_variant_value, options_from_collection_for_select(option_type.option_values, :name, :name) %>
+
+    <label>价格</label>
+    <%= f.text_field :price %>
+  <% end %>
+
+  <button type="submit" class="btn btn-default">确定保存</button>
+  <button type="reset" class="btn btn-default">取消</button>
+<% end %>
