@@ -12,7 +12,7 @@ module Admin
       begin
         @product = Product.new(product_params)
         if set_images && set_brand && @product.save
-          redirect_to admin_products_path
+          redirect_to edit_admin_product_path(@product)
         else
           flash[:error] = "创建失败：#{@product.errors.full_messages}"
           render :new

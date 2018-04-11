@@ -1,7 +1,7 @@
 class OptionValue < ApplicationRecord
   belongs_to :option_type
 
-  acts_as_list scope: :option_type
+  # acts_as_list scope: :option_type
 
   has_many :option_value_variants
   has_many :variants, through: :option_value_variants

@@ -1,4 +1,7 @@
 class Product < ApplicationRecord
+
+  before_destroy :ensure_no_line_items
+
   has_one :master,
           -> { where is_master: true },
           inverse_of: :product,
@@ -65,5 +68,12 @@ class Product < ApplicationRecord
   #     end
   #   end
   # end
+
+  def ensure_no_line_items
+    if line_items.any?
+      errors.add(:base, :cannot_destroy_if_attached_to_line_items)
+      throw(:abort)
+    end
+  end
 
 end
