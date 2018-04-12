@@ -44,6 +44,11 @@
         <% end %>
       </ul>
     </div>
+
+    <div class="form-group">
+      <label>规格选项</label>
+      <%= f.select :option_type_ids, options_from_collection_for_select(OptionType.all, :id, :name, {:selected => @product.option_type_ids}), {include_hidden: false}, {class: 'select2', multiple: true} %>
+    </div>
   <% end %>
 
   <div class="form-group">

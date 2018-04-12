@@ -60,6 +60,8 @@ gem 'redis-namespace'
 gem 'sinatra', :require => nil
 # sidekiq end
 
+gem "select2-rails"
+
 gem 'dotenv-rails', :require => 'dotenv/rails-now'
 
 group :development, :test do

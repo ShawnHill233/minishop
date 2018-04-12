@@ -38,6 +38,8 @@ module Admin
     def update
       begin
         puts params
+        puts "*****"
+        puts params
         if set_images && set_brand && @product.update(product_params) && @product.save
           redirect_to admin_products_path
         else

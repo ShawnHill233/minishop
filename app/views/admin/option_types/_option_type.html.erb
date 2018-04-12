@@ -1,0 +1,8 @@
+<tr>
+  <td><%= option_type.name %></td>
+  <td><%= option_type.presentation %></td>
+  <td>
+    <%= link_to '编辑', edit_admin_option_type_path(option_type) %>
+    <%= link_to '删除', admin_option_type_path(option_type), method: :delete %>
+  </td>
+</tr>

@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       end
     end
     resources :banners
+    resources :option_types
     resources :prototypes do
       member do
         get :get_property_names

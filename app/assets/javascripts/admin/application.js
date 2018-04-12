@@ -16,4 +16,5 @@
 //= require dataTables/jquery.dataTables
 //= require bootstrap_sb_admin_base_v2
 //= require cocoon
+//= require select2
 //= require_tree .
