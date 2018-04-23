@@ -17,4 +17,5 @@
 //= require bootstrap_sb_admin_base_v2
 //= require cocoon
 //= require select2
+//= require simditor
 //= require_tree .

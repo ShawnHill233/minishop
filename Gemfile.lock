@@ -312,6 +312,7 @@ GEM
     sidekiq-status (1.0.0)
       chronic_duration
       sidekiq (>= 3.0)
+    simditor (2.3.6)
     sinatra (2.0.0)
       mustermann (~> 1.0)
       rack (~> 2.0)
@@ -412,6 +413,7 @@ DEPENDENCIES
   settingslogic
   sidekiq (= 4.1.2)
   sidekiq-status
+  simditor
   sinatra
   spring
   spring-watcher-listen (~> 2.0.0)
