@@ -15,5 +15,9 @@ module Entities
       end
     end
     expose :product_properties, using: Entities::ProductProperty
+    expose :details
+    expose :option_types, using: Entities::OptionType
+    expose :master, using: Entities::Variant
+    expose :variants, using: Entities::Variant
   end
 end
