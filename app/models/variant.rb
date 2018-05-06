@@ -54,6 +54,19 @@ class Variant < ApplicationRecord
     option_values.detect { |o| o.option_type.name == opt_name }.try(:presentation)
   end
 
+  def options_text
+    values = option_values.sort do |a, b|
+      a.option_type.position <=> b.option_type.position
+    end
+
+    values.to_a.map! do |ov|
+      # "#{ov.option_type.presentation}: #{ov.presentation}"
+      "#{ov.presentation}"
+    end
+
+    values.to_sentence(words_connector: '；', two_words_connector: '；')
+  end
+
   private
   def ensure_no_line_items
     if line_items.any?

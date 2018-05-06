@@ -13,5 +13,6 @@ module Entities
     expose :image do |line_item|
       line_item.product.images[0].try(:full_url, 'small')
     end
+    expose :options_text
   end
 end
