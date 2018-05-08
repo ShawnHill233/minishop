@@ -5,13 +5,15 @@ module Entities
     expose :name
     expose :description
     expose :price
-    expose :images do |product, options|
-      if options[:image_style] == 'product'
+    expose :images do
+      expose :product do |product|
         product.images.map { |image| image.full_url('product') }
-      elsif options[:image_style] == 'large'
+      end
+      expose :large do |product|
         product.images.map { |image| image.full_url('large') }
-      else
-        product.images.map { |image| image.full_url }
+      end
+      expose :small do |product|
+        product.images.map { |image| image.full_url('small') }
       end
     end
     expose :product_properties, using: Entities::ProductProperty
